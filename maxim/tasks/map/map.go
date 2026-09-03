@@ -87,6 +87,7 @@ func Difference(a, b []int) []int {
 	for _, v := range a {
 		if _, ok := ma[v]; !ok {
 			slice = append(slice, v)
+			ma[v] = struct{}{}
 		}
 	}
 	return slice
@@ -115,6 +116,7 @@ func main() {
 	fmt.Println(Clone(maq))
 	fmt.Println(maq)
 	fmt.Println("#12")
-	b := []int{2, 5}
-	fmt.Println(Difference(slice, b))
+	b := []int{2, 5, 2}
+	c := []int{}
+	fmt.Println(Difference(b, c))
 }
