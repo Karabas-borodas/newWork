@@ -175,7 +175,7 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 	countChank := (len(s) + size - 1) / size
 
 	slice := make([][]int, countChank)
-	count := size
+	count := size - 1
 	lavelSlice := 0
 	var sl []int
 	slice[0] = sl
@@ -184,8 +184,10 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 		if i == count {
 			count += size
 			lavelSlice++
-			var sl2 []int
-			slice[lavelSlice] = sl2
+			if count < len(s) {
+				var sl2 []int
+				slice = append(slice, sl2)
+			}
 			// slice[lavelSlice] = append(slice[lavelSlice], v)
 		}
 	}
@@ -251,6 +253,22 @@ func SlidingWindowViews(s []int, size int) ([][]int, error) {
 	return slice, nil
 }
 
+// NOTE:52
+func SplitOnValue(s []int, sep int) [][]int {
+	slice := make([][]int, 0)
+	// last := 0
+	// first := 0
+	// for i, v := range s {
+	// 	if v == sep {
+	//
+	// 		last = i
+	// 		slice = append(slice[first:last])
+	// 		first = i
+	// 	}
+	// }
+	return slice
+}
+
 //NOTE:65 сделать
 
 func main() {
@@ -278,12 +296,15 @@ func main() {
 	fmt.Println("29")
 	fmt.Println(Unique([]int{1, 1, 3, 4, 3, 3, 4, 4, 5, 5}))
 	fmt.Println("47")
-	fmt.Println(ChunkViews([]int{1, 1, 3, 4, 3, 3, 4, 4, 5, 5}, 3))
+	fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 4))
 	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 3))
+	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 2))
 	fmt.Println("49")
 	fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
 	// TODO:: после созвона 03.09.26
 	fmt.Println("50")
 	fmt.Println(SlidingWindowViews([]int{1, 2, 3}, 3))
 	fmt.Println(SlidingWindowViews([]int{1, 2, 3, 4}, 3))
+	fmt.Println("50")
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 3))
 }
