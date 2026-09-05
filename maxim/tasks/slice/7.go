@@ -181,10 +181,10 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 	slice[0] = sl
 	for i, v := range s {
 		slice[lavelSlice] = append(slice[lavelSlice], v)
-		if i == count {
+		if i == count sfjd lk{
 			count += size
 			lavelSlice++
-			if count < len(s) {
+			if count <= len(s) {
 				var sl2 []int
 				slice = append(slice, sl2)
 			}
@@ -299,6 +299,7 @@ func main() {
 	fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 4))
 	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 3))
 	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 2))
+	fmt.Println(ChunkViews([]int{1, 4, 2, 3, 4, 5}, 2))
 	fmt.Println("49")
 	fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
 	// TODO:: после созвона 03.09.26
