@@ -184,10 +184,10 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 		if i == count {
 			count += size
 			lavelSlice++
-			if count <= len(s) {
-				var sl2 []int
-				slice = append(slice, sl2)
-			}
+			// if count <= len(s) {
+			// 	var sl2 []int
+			// 	slice = append(slice, sl2)
+			// }
 			// slice[lavelSlice] = append(slice[lavelSlice], v)
 		}
 	}
