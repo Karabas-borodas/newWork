@@ -145,6 +145,7 @@ func Unique(s []int) []int {
 
 // NOTE:47 сделать
 func ChunkViews(s []int, size int) ([][]int, error) {
+	//NOTE:мое решение
 	// if len(s) == 0 {
 	// 	return [][]int{}, nil
 	// }
@@ -152,18 +153,22 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 	// 	return nil, fmt.Errorf("size cant be lou %d", size)
 	// }
 	//
-	// slice := make([][]int,  size)
-	// count := size
-	// lavelSlice := 0
-	// for i, v := range s {
+	// countChank := (len(s) + size - 1) / size
 	//
+	// slice := make([][]int, countChank)
+	// count := size - 1
+	// lavelSlice := 0
+	// var sl []int
+	// slice[0] = sl
+	// for i, v := range s {
 	// 	slice[lavelSlice] = append(slice[lavelSlice], v)
 	// 	if i == count {
-	// 		count += size + 1
+	// 		count += size
 	// 		lavelSlice++
 	// 	}
 	// }
 	// return slice, nil
+	//NOTE:нейронка
 
 	if len(s) == 0 {
 		return [][]int{}, nil
@@ -171,27 +176,18 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 	if size < 0 {
 		return nil, fmt.Errorf("size cant be lou %d", size)
 	}
-
-	countChank := (len(s) + size - 1) / size
-
-	slice := make([][]int, countChank)
-	count := size - 1
-	lavelSlice := 0
-	var sl []int
-	slice[0] = sl
-	for i, v := range s {
-		slice[lavelSlice] = append(slice[lavelSlice], v)
-		if i == count {
-			count += size
-			lavelSlice++
-			// if count <= len(s) {
-			// 	var sl2 []int
-			// 	slice = append(slice, sl2)
-			// }
-			// slice[lavelSlice] = append(slice[lavelSlice], v)
+	// countChank := (len(s) + size - 1) / size
+	slice := make([][]int, 0)
+	for i := 0; i < len(s); i += size {
+		end := i + size
+		if end > len(s) {
+			end = len(s)
 		}
+		slice = append(slice, s[i:end])
+
 	}
 	return slice, nil
+
 }
 
 // NOTE:49 сделать
