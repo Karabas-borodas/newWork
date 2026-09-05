@@ -146,47 +146,48 @@ func Unique(s []int) []int {
 // NOTE:47 сделать
 func ChunkViews(s []int, size int) ([][]int, error) {
 	//NOTE:мое решение
-	// if len(s) == 0 {
-	// 	return [][]int{}, nil
-	// }
-	// if size < 0 {
-	// 	return nil, fmt.Errorf("size cant be lou %d", size)
-	// }
-	//
-	// countChank := (len(s) + size - 1) / size
-	//
-	// slice := make([][]int, countChank)
-	// count := size - 1
-	// lavelSlice := 0
-	// var sl []int
-	// slice[0] = sl
-	// for i, v := range s {
-	// 	slice[lavelSlice] = append(slice[lavelSlice], v)
-	// 	if i == count {
-	// 		count += size
-	// 		lavelSlice++
-	// 	}
-	// }
-	// return slice, nil
-	//NOTE:нейронка
-
 	if len(s) == 0 {
 		return [][]int{}, nil
 	}
 	if size < 0 {
 		return nil, fmt.Errorf("size cant be lou %d", size)
 	}
-	// countChank := (len(s) + size - 1) / size
-	slice := make([][]int, 0)
-	for i := 0; i < len(s); i += size {
-		end := i + size
-		if end > len(s) {
-			end = len(s)
-		}
-		slice = append(slice, s[i:end])
 
+	countChank := (len(s) + size - 1) / size
+
+	slice := make([][]int, countChank)
+	count := size - 1
+	lavelSlice := 0
+	var sl []int
+	slice[0] = sl
+	for i, v := range s {
+		slice[lavelSlice] = append(slice[lavelSlice], v)
+		if i == count {
+			count += size
+			lavelSlice++
+		}
 	}
 	return slice, nil
+	//NOTE:нейронка
+
+	// if len(s) == 0 {
+	// 	return [][]int{}, nil
+	// }
+	// if size < 0 {
+	// 	return nil, fmt.Errorf("size cant be lou %d", size)
+	// }
+	// // countChank := (len(s) + size - 1) / size
+	// slice := make([][]int, 0)
+	// for i := 0; i < len(s); i += size {
+	// 	end := i + size
+	// 	if end > len(s) {
+	// 		end = len(s)
+	// 	}
+	// 	slice = append(slice, s[i:end])
+	//
+	// }
+	// slice[0][0] = 9
+	// return slice, nil
 
 }
 
@@ -198,15 +199,18 @@ func SplitIntoKViews(s []int, k int) ([][]int, error) {
 	if k < 1 {
 		return nil, fmt.Errorf("aaaaa all bad")
 	}
-	if k > len(s) {
-		k = len(s)
-	}
+	// if k > len(s) {
+	// 	k = len(s)
+	// }
+	// ka := k
 	chankLangth := (len(s)) / k
 	chankLitlBit := len(s) % k
 	slice := make([][]int, k)
-	sl := make([]int, chankLangth+chankLitlBit)
-	sliceCount := 0
-	slice[sliceCount] = sl
+	// sliceCount := 0
+	// for i := 0; i < k; i++ {
+	// 	slice[i] = []int{}
+	// }
+
 	start := 0
 	for i := 0; i < k; i++ {
 		size := chankLangth
@@ -217,6 +221,13 @@ func SplitIntoKViews(s []int, k int) ([][]int, error) {
 		slice[i] = chank
 		start += size
 	}
+	// fmt.Println(len(slice))
+	// if len(slice) < ka {
+	// 	for len(slice) <= k+1 {
+	// 		sl := make([]int, 0)
+	// 		slice = append(slice, sl)
+	// 	}
+	// }
 	return slice, nil
 }
 
@@ -298,6 +309,7 @@ func main() {
 	fmt.Println(ChunkViews([]int{1, 4, 2, 3, 4, 5}, 2))
 	fmt.Println("49")
 	fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
+	fmt.Println(SplitIntoKViews([]int{1, 2}, 4))
 	// TODO:: после созвона 03.09.26
 	fmt.Println("50")
 	fmt.Println(SlidingWindowViews([]int{1, 2, 3}, 3))
