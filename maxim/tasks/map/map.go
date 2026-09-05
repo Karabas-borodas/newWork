@@ -74,6 +74,7 @@ func Clone(m map[string][]int) map[string][]int {
 		ma[i] = v
 	}
 	// ma["1"] = []int{5, 6}
+	// m["1"] = []int{7, 7}
 	return ma
 }
 
@@ -113,7 +114,9 @@ func main() {
 	fmt.Println("#10")
 	maq := map[string][]int{"1": {1, 2, 3},
 		"2": {2, 3, 4}}
-	fmt.Println(Clone(maq))
+	maa := Clone(maq)
+	maq["1"] = []int{3}
+	fmt.Println((maa))
 	fmt.Println(maq)
 	fmt.Println("#12")
 	b := []int{2, 5, 2}

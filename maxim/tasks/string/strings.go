@@ -93,7 +93,7 @@ func IndexOf(s, sub string) int {
 	for i := 0; i < len(s); i++ {
 		if s[i] == sub[subIndex] && subIndex < len(sub)-1 {
 			subIndex += 1
-		} else if subIndex == len(sub)-1 {
+		} else if subIndex == len(sub)-1 && s[i] == sub[subIndex] {
 			return i - subIndex
 		} else {
 			subIndex = 0
@@ -118,6 +118,9 @@ func main() {
 	fmt.Println(NormalizeSpaces("   ШаЛаШ"))
 	fmt.Println(NormalizeSpaces("аЛ   аШ  "))
 	fmt.Println(NormalizeSpaces("     "))
+	fmt.Println(NormalizeSpaces(" a b "))
 	fmt.Println("#12")
 	fmt.Println(IndexOf(string, "дела"))
+	fmt.Println(IndexOf("ab", "x"))
+
 }
