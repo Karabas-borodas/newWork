@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 var mas = map[string]int{
@@ -94,6 +95,20 @@ func Difference(a, b []int) []int {
 	return slice
 }
 
+// NOTE:15
+func UniqueFold(words []string) []string {
+	var str []string
+	ma := map[string]struct{}{}
+	for i := 0; i < len(words); i++ {
+		s := strings.ToLower(words[i])
+		if _, ok := ma[s]; !ok {
+			ma[s] = struct{}{}
+			str = append(str, words[i])
+		}
+	}
+	return str
+}
+
 func main() {
 	slice := []int{1, 2, 3, 4, 5, 6, 2, 3, 1, 2}
 	fmt.Println(slice)
@@ -122,4 +137,7 @@ func main() {
 	b := []int{2, 5, 2}
 	c := []int{}
 	fmt.Println(Difference(b, c))
+	fmt.Println("#15")
+	result := UniqueFold([]string{"aABbcCssS", "aaaa", "AAAA", "B"})
+	fmt.Println(result)
 }
