@@ -133,6 +133,28 @@ func MostFrequent(nums []int) (value int, count int, ok bool) {
 	return value, count, true
 }
 
+// NOTE:18
+func AreAnagrams(a, b string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	stA := strings.ToLower(a)
+	stB := strings.ToLower(b)
+	ma := map[string]struct{}{}
+	ma[stA] = struct{}{}
+	if _, ok := ma[stB]; !ok {
+		return false
+	}
+	// for i := 0; i < len(stA); i++ {
+	// 	if stA[i] != stB[i] {
+	// 		return false
+	// 	}
+	//
+	// }
+	return true
+
+}
+
 func main() {
 	slice := []int{1, 2, 3, 4, 5, 6, 2, 3, 1, 2}
 	fmt.Println(slice)
@@ -167,4 +189,7 @@ func main() {
 	fmt.Println("#16")
 	fmt.Println(MostFrequent([]int{1, 1, 1, 2, 2}))
 	fmt.Println(MostFrequent([]int{2, 2, 1, 1, 3}))
+	fmt.Println("#18")
+	fmt.Println(AreAnagrams("aA", "Aa"))
+	fmt.Println(AreAnagrams("ab", "Aa"))
 }
