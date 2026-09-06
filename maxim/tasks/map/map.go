@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"strings"
 )
@@ -109,6 +110,29 @@ func UniqueFold(words []string) []string {
 	return str
 }
 
+// NOTE:16
+func MostFrequent(nums []int) (value int, count int, ok bool) {
+	if len(nums) == 0 {
+		return 0, 0, false
+	}
+	value = math.MaxInt
+	m := map[int]int{}
+	for _, v := range nums {
+		if _, ok := m[v]; ok {
+			m[v] += 1
+		} else {
+			m[v] = 1
+		}
+	}
+	for v := range m {
+		if m[v] >= count && v < value {
+			count = m[v]
+			value = v
+		}
+	}
+	return value, count, true
+}
+
 func main() {
 	slice := []int{1, 2, 3, 4, 5, 6, 2, 3, 1, 2}
 	fmt.Println(slice)
@@ -140,4 +164,7 @@ func main() {
 	fmt.Println("#15")
 	result := UniqueFold([]string{"aABbcCssS", "aaaa", "AAAA", "B"})
 	fmt.Println(result)
+	fmt.Println("#16")
+	fmt.Println(MostFrequent([]int{1, 1, 1, 2, 2}))
+	fmt.Println(MostFrequent([]int{2, 2, 1, 1, 3}))
 }
