@@ -278,6 +278,16 @@ func SplitOnValue(s []int, sep int) [][]int {
 	return slice
 }
 
+// NOTE:54
+func ExpandToCap(s []int) []int {
+	fmt.Println(cap(s))
+	sl := make([]int, cap(s))
+	if s == nil {
+		return nil
+	}
+	return sl
+}
+
 //NOTE:65 сделать
 
 func main() {
@@ -321,4 +331,10 @@ func main() {
 	fmt.Println(SplitOnValue([]int{1, 2, 3, 4, 3, 6}, 3))
 	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 1))
 	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 4))
+	fmt.Println("54")
+	fmt.Println(ExpandToCap([]int{1, 2, 3, 4, 5}))
+	q := ExpandToCap(nil)
+	if q == nil {
+		fmt.Println("q==nil")
+	}
 }
