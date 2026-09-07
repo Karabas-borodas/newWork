@@ -288,6 +288,15 @@ func ExpandToCap(s []int) []int {
 	return sl
 }
 
+// NOTE:55
+// Верни slice view с теми же элементами, но cap результата должен быть ровно len(s). Новый backing
+// array создавать нельзя.
+func ClipCapacity(s []int) []int {
+	sa := s[0:]
+
+	return sa
+}
+
 //NOTE:65 сделать
 
 func main() {
@@ -337,4 +346,13 @@ func main() {
 	if q == nil {
 		fmt.Println("q==nil")
 	}
+	fmt.Println("55")
+	sl := make([]int, 4, 14)
+	fmt.Println(ClipCapacity(sl))
+
+	b := ClipCapacity(sl)
+	b[0] = 1
+	fmt.Println(cap(sl))
+	fmt.Println(sl)
+
 }
