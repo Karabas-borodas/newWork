@@ -96,6 +96,7 @@ func Difference(a, b []int) []int {
 	return slice
 }
 
+// TODO:: после созвона 03.09.26
 // NOTE:15
 func UniqueFold(words []string) []string {
 	var str []string

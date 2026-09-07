@@ -263,16 +263,18 @@ func SlidingWindowViews(s []int, size int) ([][]int, error) {
 // NOTE:52
 func SplitOnValue(s []int, sep int) [][]int {
 	slice := make([][]int, 0)
-	// last := 0
-	// first := 0
-	// for i, v := range s {
-	// 	if v == sep {
-	//
-	// 		last = i
-	// 		slice = append(slice[first:last])
-	// 		first = i
-	// 	}
-	// }
+	last := 0
+	first := 0
+	for i, v := range s {
+		if v == sep && i != 0 && i != len(s)-1 {
+
+			last = i
+			slice = append(slice, s[first:last])
+			// slice = append(s[first:last])
+			first = i + 1
+		}
+	}
+	slice = append(slice, s[first:])
 	return slice
 }
 
@@ -314,6 +316,9 @@ func main() {
 	fmt.Println("50")
 	fmt.Println(SlidingWindowViews([]int{1, 2, 3}, 3))
 	fmt.Println(SlidingWindowViews([]int{1, 2, 3, 4}, 3))
-	fmt.Println("50")
+	fmt.Println("52")
 	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 3))
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4, 3, 6}, 3))
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 1))
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 4))
 }
