@@ -103,6 +103,41 @@ func IndexOf(s, sub string) int {
 	return -1
 }
 
+// TODO:: после созвона 03.09.26
+// NOTE:14
+// Подсчитайте все вхождения подстроки, включая пересекающиеся. Например, в "aaaa"
+// строка "aa" встречается три раза.
+func CountOverlapping(s, sub string) (int, error) {
+	if len(sub) > len(s) {
+		return 0, fmt.Errorf(" sub struct longer first")
+	}
+	if len(sub) == 0 || len(s) == 0 {
+		return 0, fmt.Errorf("empty strung")
+	}
+	runS := []rune(s)
+	runeSub := []rune(sub)
+	count := 0
+	for i := 0; i < len(runS); i++ {
+		if runS[i] == runeSub[0] {
+			var flag bool = true
+			for j := 0; j < len(runeSub); j++ {
+				if i+j >= len(runS) {
+					flag = false
+					break
+				}
+				if runS[i+j] != runeSub[j] {
+					flag = false
+					break
+				}
+			}
+			if flag == true {
+				count++
+			}
+
+		}
+	}
+	return count, nil
+}
 func main() {
 	var string = "Странные дела! Awada Kedawra \n OP musorok ne shey mne SroKK"
 	fmt.Println(string)
@@ -122,5 +157,9 @@ func main() {
 	fmt.Println("#12")
 	fmt.Println(IndexOf(string, "дела"))
 	fmt.Println(IndexOf("ab", "x"))
-
+	fmt.Println("#14")
+	fmt.Println(CountOverlapping("aaaa", "aa"))
+	fmt.Println(CountOverlapping("aaaa", "aa"))
+	fmt.Println(CountOverlapping("aaaa", ""))
+	fmt.Println(CountOverlapping("aa  aa", "aa"))
 }
