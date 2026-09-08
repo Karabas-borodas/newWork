@@ -297,6 +297,40 @@ func ClipCapacity(s []int) []int {
 	return sa
 }
 
+// NOTE:56
+// Верни первые n элементов как view, причём cap результата должен быть ровно n, чтобы
+// последующий append не мог затереть элементы s после n.
+func TakeWithLimitedCap(s []int, n int) ([]int, error) {
+	if n < 0 {
+		return nil, fmt.Errorf("n <0")
+	}
+	if n > len(s) {
+		return nil, fmt.Errorf("n >%d", len(s))
+	}
+
+	sl := s[:n:n]
+	return sl, nil
+}
+
+// NOTE:56
+// Измени длину до n. При увеличении используй существующий cap без аллокации, если его
+// хватает; новые элементы должны быть нулевыми. При уменьшении верни reslice.
+func Resize(s []int, n int) ([]int, error) {
+	if n < 0 {
+		return nil, fmt.Errorf("length<0")
+	}
+	if n < len(s) {
+		slice := make([]int, n, n)
+		slice = s[:n]
+		return slice, nil
+	}
+	sl := s[:len(s)]
+	for range n - len(s) - 1 {
+		sl = append(sl, 0)
+	}
+	return sl, nil
+}
+
 //NOTE:65 сделать
 
 func main() {
@@ -354,5 +388,15 @@ func main() {
 	b[0] = 1
 	fmt.Println(cap(sl))
 	fmt.Println(sl)
-
+	fmt.Println(len(sl))
+	fmt.Println("56")
+	sl = make([]int, 3, 15)
+	fmt.Println(TakeWithLimitedCap(sl, 5))
+	fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 9))
+	fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 3))
+	fmt.Println("57")
+	fmt.Println(Resize(sl, 2))
+	fmt.Println(Resize(sl, 5))
+	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
+	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
 }
