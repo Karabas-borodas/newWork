@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	// "strconv"
+	"strings"
 )
 
 // NOTE:1
@@ -175,6 +176,49 @@ func LongestCommonPrefix(items []string) string {
 	return str
 }
 
+// NOTE:18
+// Соедините строки разделителем без strings.Join. Реализация не должна иметь
+// квадратичную сложность из-за многократной конкатенации.
+func Join(parts []string, sep string) string {
+
+	//WARNING: o(n^2)
+	// for i := 0; i < len(parts); i++ {
+	// 	str = str + parts[i]
+	// 	if i+1 < len(parts) {
+	// 		str = str + sep
+	// 	}
+	// }
+	//WARNING: o(n^2)
+	// for i := 0; i < len(parts)-1; i++ {
+	// 	parts[i] += sep
+	// }
+	// for _, v := range parts {
+	// 	str = str + v
+	// }
+	//OPTIM:нейронка дала если есть другие варианты более простые то хотелось бы увидеть
+	if len(parts) == 0 {
+		return ""
+	}
+	var lengthString = 0
+	for _, v := range parts {
+		lengthString += len(v)
+	}
+	lengthString += (len(parts) - 1) * len(sep)
+	var str strings.Builder
+	str.Grow(lengthString)
+	// for i := 0; i < len(parts)-1; i++ {
+	// 	str.WriteRune(parts)parts[i] += sep
+	// }
+	for i, v := range parts {
+		str.WriteString(v)
+		if i+1 < len(parts) {
+			str.WriteString(sep)
+		}
+	}
+	var sr string = str.String()
+	return sr
+}
+
 func main() {
 	var stringers = "Странные дела! Awada Kedawra \n OP musorok ne shey mne SroKK"
 	fmt.Println(stringers)
@@ -203,4 +247,7 @@ func main() {
 	fmt.Println(LongestCommonPrefix([]string{"aaa", "aasss", "aaab"}))
 	fmt.Println(LongestCommonPrefix([]string{"", "aasss", "aaab"}))
 	fmt.Println(LongestCommonPrefix([]string{"abc", "aasss", "aaab"}))
+	fmt.Println("#18")
+	fmt.Println(Join([]string{"1", "1", "4"}, "+"))
+	fmt.Println(Join([]string{}, ""))
 }
