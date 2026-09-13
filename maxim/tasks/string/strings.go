@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	// "strconv"
-	"strings"
+	"strconv"
+	// "strings"
 )
 
 // NOTE:1
@@ -196,27 +196,96 @@ func Join(parts []string, sep string) string {
 	// 	str = str + v
 	// }
 	//OPTIM:нейронка дала если есть другие варианты более простые то хотелось бы увидеть
+	// if len(parts) == 0 {
+	// 	return ""
+	// }
+	// var lengthString = 0
+	// for _, v := range parts {
+	// 	lengthString += len(v)
+	// }
+	// lengthString += (len(parts) - 1) * len(sep)
+	// var str strings.Builder
+	// str.Grow(lengthString)
+	// // for i := 0; i < len(parts)-1; i++ {
+	// // 	str.WriteRune(parts)parts[i] += sep
+	// // }
+	// for i, v := range parts {
+	// 	str.WriteString(v)
+	// 	if i+1 < len(parts) {
+	// 		str.WriteString(sep)
+	// 	}
+	// }
+	// var sr string = str.String()
+	// return sr
+
+	// //NOTE:еще идейка
 	if len(parts) == 0 {
 		return ""
 	}
-	var lengthString = 0
+
+	lengthString := 0
 	for _, v := range parts {
 		lengthString += len(v)
 	}
-	lengthString += (len(parts) - 1) * len(sep)
-	var str strings.Builder
-	str.Grow(lengthString)
-	// for i := 0; i < len(parts)-1; i++ {
-	// 	str.WriteRune(parts)parts[i] += sep
-	// }
-	for i, v := range parts {
-		str.WriteString(v)
-		if i+1 < len(parts) {
-			str.WriteString(sep)
+	lengthString += len(sep) * (len(parts) - 1)
+
+	sr := make([]byte, lengthString)
+	pos := 0
+
+	for i := 0; i < len(parts); i++ {
+		// Копируем слово
+		for j := 0; j < len(parts[i]); j++ {
+			sr[pos] = parts[i][j]
+			pos++
+		}
+		// Копируем разделитель (если не последнее слово)
+		if i < len(parts)-1 {
+			for j := 0; j < len(sep); j++ {
+				sr[pos] = sep[j]
+				pos++
+			}
 		}
 	}
-	var sr string = str.String()
-	return sr
+
+	return string(sr)
+
+}
+
+// NOTE:21
+// Реализуйте RLE-сжатие по Unicode-символам. Формат результата: количество,
+// двоеточие, символ; группы разделяются точкой с запятой. Формат должен однозначно
+// работать и для цифр, и для знаков пунктуации.
+func EncodeRLE(s string) string {
+	if s == "" {
+
+		fmt.Errorf("zero veluse")
+		return ""
+	}
+	if s == "" {
+
+		return ""
+	}
+	counte := 1
+	r := []rune(s)
+	var str string
+	for i := 1; i < len(s); i++ {
+		if r[i] == r[i-1] {
+			counte++
+		} else {
+
+			str = str + strconv.Itoa(counte)
+			str = str + string(r[i-1])
+			counte = 1
+		}
+		// if i == len(s)-1 {
+		//
+		// 	str = str + strconv.Itoa(counte)
+		// 	str = str + string(r[i-1])
+		// }
+	}
+	str = str + strconv.Itoa(counte)
+	str = str + string(r[len(s)-1])
+	return str
 }
 
 func main() {
@@ -248,6 +317,13 @@ func main() {
 	fmt.Println(LongestCommonPrefix([]string{"", "aasss", "aaab"}))
 	fmt.Println(LongestCommonPrefix([]string{"abc", "aasss", "aaab"}))
 	fmt.Println("#18")
-	fmt.Println(Join([]string{"1", "1", "4"}, "+"))
+	fmt.Println(Join([]string{"1", "12", "4"}, "+"))
+	fmt.Println(Join([]string{"р", "1н2", "4"}, "+"))
 	fmt.Println(Join([]string{}, ""))
+	fmt.Println("#21")
+	fmt.Println(EncodeRLE("aaassssddd"))
+	var s string
+	fmt.Println(EncodeRLE("aaassssddddd"))
+	fmt.Println(EncodeRLE("asd"))
+	fmt.Println(EncodeRLE(s))
 }
