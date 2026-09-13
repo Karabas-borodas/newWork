@@ -12,3 +12,8 @@ func firstMassage() chan string {
 	}()
 	return ch
 }
+
+// NOTE:2
+func SendNumber(n int, ch chan int) {
+	ch <- n
+}
