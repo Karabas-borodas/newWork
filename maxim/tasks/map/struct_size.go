@@ -1,14 +1,14 @@
 package main
 
-import (
-	"fmt"
-	"unsafe"
-)
+// import (
+// 	"fmt"
+// 	"unsafe"
+// )
 
-func main() {
-	var value struct{}
-	var in interface{}
-
-	fmt.Println(unsafe.Sizeof(value))
-	fmt.Println(unsafe.Sizeof(in))
-}
+// func main() {
+// 	var value struct{}
+// 	var in interface{}
+//
+// 	fmt.Println(unsafe.Sizeof(value))
+// 	fmt.Println(unsafe.Sizeof(in))
+// }
