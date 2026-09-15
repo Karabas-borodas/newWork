@@ -61,3 +61,13 @@ func Area(x Rectangle) int {
 	ar := x.Heigth * x.Width
 	return ar
 }
+
+// NOTE:4
+// Для структуры Point напишите функцию IsOrigin(p Point) bool, которая возвращает true, если обе
+// координаты равны нулю.
+func IsOrigin(p Point) bool {
+	if p.X == 0 && p.Y == 0 {
+		return true
+	}
+	return false
+}
