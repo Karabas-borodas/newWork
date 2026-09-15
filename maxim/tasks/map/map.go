@@ -156,6 +156,27 @@ func AreAnagrams(a, b string) bool {
 
 }
 
+// NOTE:19
+// Напишите функцию WordFrequency(text string) map[string]int. Словом считается непрерывная
+// последовательность Unicode-букв или цифр; регистр не учитывается.
+func WordFrequency(text string) map[string]int {
+	count := 0
+	// firsrCount := 0
+	st := strings.ToLower(text)
+	mp := map[string]int{}
+	for i := 0; i < len(st); i++ {
+		if st[i] == ' ' {
+			mp[st[count:i]]++
+			count = i + 1
+		}
+	}
+	if count < len(st) {
+		mp[st[count:len(st)]]++
+	}
+	return mp
+
+}
+
 // func main() {
 // 	slice := []int{1, 2, 3, 4, 5, 6, 2, 3, 1, 2}
 // 	fmt.Println(slice)

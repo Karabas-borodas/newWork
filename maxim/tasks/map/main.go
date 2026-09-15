@@ -41,4 +41,7 @@ func main() {
 	fmt.Println("#18")
 	fmt.Println(AreAnagrams("aA", "Aa"))
 	fmt.Println(AreAnagrams("ab", "Aa"))
+	fmt.Println("#19")
+	fmt.Println(WordFrequency("aa aa aa ad ad "))
+	fmt.Println(WordFrequency(""))
 }

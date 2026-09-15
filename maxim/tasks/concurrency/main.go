@@ -18,4 +18,9 @@ func main() {
 	}()
 	res1 := <-ch2
 	fmt.Println(res1)
+	go func() {
+		SendNumber(43, ch2)
+	}()
+	res1 = <-ch2
+	fmt.Println(res1)
 }
