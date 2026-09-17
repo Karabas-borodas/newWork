@@ -1,6 +1,6 @@
 package main
 
-import ()
+import "fmt"
 
 // NOTE:1
 // first massage
@@ -30,6 +30,14 @@ func Double(n int) int {
 			ch1 <- n
 		}
 	}(n)
+	return <-ch1
+}
 
+// NOTE:4
+func Greet(name string) string {
+	ch1 := make(chan string)
+	go func(name string) {
+		ch1 <- fmt.Sprintf("Привет %s", name)
+	}(name)
 	return <-ch1
 }

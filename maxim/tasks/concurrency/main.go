@@ -26,4 +26,7 @@ func main() {
 	fmt.Println("----3------")
 	fmt.Println(Double(2))
 	fmt.Println(Double(-2))
+	fmt.Println("----4------")
+	fmt.Println(Greet("Friend"))
+	fmt.Println(Greet(""))
 }
