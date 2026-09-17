@@ -23,4 +23,7 @@ func main() {
 	}()
 	res1 = <-ch2
 	fmt.Println(res1)
+	fmt.Println("----3------")
+	fmt.Println(Double(2))
+	fmt.Println(Double(-2))
 }
