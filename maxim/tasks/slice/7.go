@@ -335,7 +335,10 @@ func Resize(s []int, n int) ([]int, error) {
 // Гарантируй cap >= minCap, сохранив len и значения. Если cap уже хватает, верни slice на том же
 // backing array; иначе выдели новый.
 func EnsureCapacity(s []int, minCap int) ([]int, error) {
-	if cap(s) > minCap {
+	if minCap < 0 {
+		return nil, fmt.Errorf("alarma min<0")
+	}
+	if cap(s) < minCap {
 		m := make([]int, minCap, minCap)
 		fmt.Println(cap(m))
 		copy(m, s)
@@ -420,7 +423,13 @@ func main() {
 	}
 	fmt.Printf("a== %v, cap==%d", a, cap(a))
 	a, err = EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 9)
-	if err == nil {
+	if err != nil {
+	}
+	fmt.Printf("a== %v, cap==%d", a, cap(a))
+	var s []int
+	a, err = EnsureCapacity(s, -2)
+	if err != nil {
+		fmt.Printf("alara")
 	}
 	fmt.Printf("a== %v, cap==%d", a, cap(a))
 }
