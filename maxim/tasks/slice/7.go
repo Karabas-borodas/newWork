@@ -312,7 +312,7 @@ func TakeWithLimitedCap(s []int, n int) ([]int, error) {
 	return sl, nil
 }
 
-// NOTE:56
+// NOTE:57
 // Измени длину до n. При увеличении используй существующий cap без аллокации, если его
 // хватает; новые элементы должны быть нулевыми. При уменьшении верни reslice.
 func Resize(s []int, n int) ([]int, error) {
@@ -329,6 +329,21 @@ func Resize(s []int, n int) ([]int, error) {
 		sl = append(sl, 0)
 	}
 	return sl, nil
+}
+
+// NOTE:57
+// Гарантируй cap >= minCap, сохранив len и значения. Если cap уже хватает, верни slice на том же
+// backing array; иначе выдели новый.
+func EnsureCapacity(s []int, minCap int) ([]int, error) {
+	if cap(s) > minCap {
+		m := make([]int, minCap, minCap)
+		fmt.Println(cap(m))
+		copy(m, s)
+		return m, nil
+	} else {
+		m := s[:minCap]
+		return m, nil
+	}
 }
 
 //NOTE:65 сделать
@@ -399,4 +414,13 @@ func main() {
 	fmt.Println(Resize(sl, 5))
 	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
 	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
+	fmt.Println("57")
+	a, err := EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 3)
+	if err == nil {
+	}
+	fmt.Printf("a== %v, cap==%d", a, cap(a))
+	a, err = EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 9)
+	if err == nil {
+	}
+	fmt.Printf("a== %v, cap==%d", a, cap(a))
 }
