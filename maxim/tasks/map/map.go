@@ -177,6 +177,23 @@ func WordFrequency(text string) map[string]int {
 
 }
 
+// NOTE: 21
+// Напишите функцию GroupByParity(nums []int) map[string][]int с ключами even и odd.
+// Относительный порядок чисел в каждой группе сохраните.
+func GroupByParity(nums []int) map[string][]int {
+	s := make(map[string][]int)
+	// s["even"] = append(s["even"], 0)
+	for _, v := range nums {
+		if v%2 == 0 {
+			s["even"] = append(s["even"], v)
+		} else {
+
+			s["odd"] = append(s["odd"], v)
+		}
+	}
+	return s
+}
+
 // func main() {
 // 	slice := []int{1, 2, 3, 4, 5, 6, 2, 3, 1, 2}
 // 	fmt.Println(slice)

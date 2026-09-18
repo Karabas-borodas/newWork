@@ -43,4 +43,6 @@ func main() {
 	fmt.Println(AreAnagrams("ab", "Aa"))
 	fmt.Println("#19")
 	fmt.Println(WordFrequency("aa aa aa ad ad "))
+	fmt.Println("#21")
+	fmt.Println(GroupByParity([]int{1, 2, 3, 4, 5, 6, 8, 9, 6}))
 }
