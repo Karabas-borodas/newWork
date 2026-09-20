@@ -29,4 +29,7 @@ func main() {
 	fmt.Println("----4------")
 	fmt.Println(Greet("Friend"))
 	fmt.Println(Greet(""))
+	fmt.Println("----4------")
+	fmt.Println(SumAsync([]int{1, 2, 3, 4, -1, -2, -4}))
+	fmt.Println(SumAsync([]int{}))
 }

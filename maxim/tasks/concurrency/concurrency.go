@@ -41,3 +41,17 @@ func Greet(name string) string {
 	}(name)
 	return <-ch1
 }
+
+// NOTE:5
+func SumAsync(nums []int) int {
+	chan1 := make(chan int)
+	summ := 0
+	go func([]int) {
+		for _, v := range nums {
+
+			summ += v
+		}
+		chan1 <- summ
+	}(nums)
+	return <-chan1
+}
