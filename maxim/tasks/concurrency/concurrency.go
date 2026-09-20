@@ -55,3 +55,17 @@ func SumAsync(nums []int) int {
 	}(nums)
 	return <-chan1
 }
+
+// NOTE:6
+func RuneCountAsync(s string) int {
+	r := []rune(s)
+	ch1 := make(chan int)
+	count := 0
+	go func() {
+		for range r {
+			count++
+		}
+		ch1 <- count
+	}()
+	return <-ch1
+}
