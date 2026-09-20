@@ -69,3 +69,5 @@ func RuneCountAsync(s string) int {
 	}()
 	return <-ch1
 }
+
+// NOTE:7

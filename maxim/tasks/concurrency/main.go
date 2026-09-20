@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -35,4 +36,13 @@ func main() {
 	fmt.Println("----6------")
 	fmt.Println(RuneCountAsync("123456"))
 	fmt.Println(RuneCountAsync(""))
+	fmt.Println("----7------")
+	ch3 := make(chan bool)
+	go func() {
+		fmt.Println("готово")
+		time.Sleep(2 * time.Second)
+		ch3 <- true
+	}()
+	_ = <-ch3
+	fmt.Println("конец")
 }
