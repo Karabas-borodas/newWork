@@ -10,9 +10,10 @@ import (
 // name string, age int) User, которая создает и возвращает пользователя.
 
 type User struct {
-	ID   int
-	Name string
-	Age  int
+	ID    int
+	Name  string
+	Age   int
+	Email string
 }
 
 func NewUser(id int, name string, age int) *User {
@@ -70,4 +71,12 @@ func IsOrigin(p Point) bool {
 		return true
 	}
 	return false
+}
+
+// NOTE:6
+// Для структуры User добавьте поле Email string. Напишите функцию WithEmail(u User, email string)
+// User, которая возвращает измененную копию пользователя и не меняет исходный u.
+func WithEmail(u User, email string) User {
+	u.Email = email
+	return u
 }
