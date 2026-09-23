@@ -80,3 +80,14 @@ func WithEmail(u User, email string) User {
 	u.Email = email
 	return u
 }
+
+// NOTE:7
+type Pair struct {
+	A int
+	B int
+}
+
+func SwapPair(A int, B int) (int, int) {
+	A, B = B, A
+	return A, B
+}

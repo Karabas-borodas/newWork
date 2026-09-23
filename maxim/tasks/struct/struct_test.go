@@ -55,3 +55,16 @@ func Test6_2(t *testing.T) {
 	}
 
 }
+func Test7_1(t *testing.T) {
+
+	p := Pair{1, 2}
+	p.A, p.B = SwapPair(p.A, p.B)
+
+	if p.A != 2 {
+		t.Errorf("A =%d", p.A)
+	}
+	if p.B != 1 {
+		t.Errorf("B =%d", p.A)
+	}
+
+}
