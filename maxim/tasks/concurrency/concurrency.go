@@ -77,3 +77,24 @@ type Rectangle struct{ Width, Height int }
 func (r Rectangle) SendArea(ch chan int) {
 	ch <- (r.Height * r.Width)
 }
+
+// NOTE:9
+type PairInfo struct {
+	Sum   int
+	Equal bool
+}
+
+func AnalyzePair(a, b int) PairInfo {
+	Par := PairInfo{}
+	ch1 := make(chan PairInfo)
+	go func() {
+		Par.Sum = a + b
+		if a == b {
+			Par.Equal = true
+		} else {
+			Par.Equal = false
+		}
+		ch1 <- Par
+	}()
+	return <-ch1
+}

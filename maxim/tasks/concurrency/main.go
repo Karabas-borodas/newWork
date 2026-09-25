@@ -43,7 +43,7 @@ func main() {
 	go func() {
 		fmt.Println("готово")
 
-		time.Sleep(2 * time.Second)
+		time.Sleep(0 * time.Second)
 		ch3 <- true
 	}()
 	_ = <-ch3
@@ -53,4 +53,8 @@ func main() {
 	ch4 := make(chan int)
 	go n.SendArea(ch4)
 	fmt.Println(<-ch4)
+	fmt.Println("----9------")
+	fmt.Println(AnalyzePair(1, 1))
+	fmt.Println(AnalyzePair(2, 1))
+	// go fmt.Println(AnalyzePair(1, 1))
 }
