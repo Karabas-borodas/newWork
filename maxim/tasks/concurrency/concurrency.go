@@ -98,3 +98,18 @@ func AnalyzePair(a, b int) PairInfo {
 	}()
 	return <-ch1
 }
+
+// NOTE:10
+func SuNonNegative(nums []int) int {
+	summ := 0
+	ch1 := make(chan int)
+	go func() {
+		for _, v := range nums {
+			if v > 0 {
+				summ += v
+			}
+		}
+		ch1 <- summ
+	}()
+	return <-ch1
+}

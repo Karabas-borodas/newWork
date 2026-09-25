@@ -57,4 +57,6 @@ func main() {
 	fmt.Println(AnalyzePair(1, 1))
 	fmt.Println(AnalyzePair(2, 1))
 	// go fmt.Println(AnalyzePair(1, 1))
+	fmt.Println("----10------")
+	fmt.Println(SuNonNegative([]int{-3, -1, 2, -5}))
 }
