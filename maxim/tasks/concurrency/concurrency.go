@@ -71,3 +71,9 @@ func RuneCountAsync(s string) int {
 }
 
 // NOTE:7
+// NOTE:8
+type Rectangle struct{ Width, Height int }
+
+func (r Rectangle) SendArea(ch chan int) {
+	ch <- (r.Height * r.Width)
+}

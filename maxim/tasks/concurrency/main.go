@@ -34,15 +34,23 @@ func main() {
 	fmt.Println(SumAsync([]int{1, 2, 3, 4, -1, -2, -4}))
 	fmt.Println(SumAsync([]int{}))
 	fmt.Println("----6------")
-	fmt.Println(RuneCountAsync("123456"))
+	a := RuneCountAsync("123445")
+	// time.Sleep(2 * time.Second)
+	fmt.Println(a)
 	fmt.Println(RuneCountAsync(""))
 	fmt.Println("----7------")
 	ch3 := make(chan bool)
 	go func() {
 		fmt.Println("готово")
+
 		time.Sleep(2 * time.Second)
 		ch3 <- true
 	}()
 	_ = <-ch3
 	fmt.Println("конец")
+	fmt.Println("----8------")
+	n := Rectangle{3, 5}
+	ch4 := make(chan int)
+	go n.SendArea(ch4)
+	fmt.Println(<-ch4)
 }
