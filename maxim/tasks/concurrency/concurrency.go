@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	// "sync"
+)
 
 // NOTE:1
 // first massage
@@ -112,4 +115,21 @@ func SuNonNegative(nums []int) int {
 		ch1 <- summ
 	}()
 	return <-ch1
+}
+
+// NOTE:11
+func Send3Mess() chan int {
+	// var wg sync.WaitGroup
+	ch1 := make(chan int)
+	go func() {
+		// wg.Add(3)
+		ch1 <- 10
+		ch1 <- 20
+		ch1 <- 30
+		// wg.Done()
+		// wg.Done()
+		// wg.Done()
+	}()
+	// wg.Wait()
+	return ch1
 }

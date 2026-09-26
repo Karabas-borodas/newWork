@@ -59,4 +59,10 @@ func main() {
 	// go fmt.Println(AnalyzePair(1, 1))
 	fmt.Println("----10------")
 	fmt.Println(SuNonNegative([]int{-3, -1, 2, -5}))
+	fmt.Println("----11------")
+	ch5 := Send3Mess()
+	fmt.Println(<-ch5, <-ch5, <-ch5)
+	// for v := range ch5 {
+	// 	fmt.Println(v)
+	// }
 }
