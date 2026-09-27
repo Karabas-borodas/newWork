@@ -349,7 +349,7 @@ func EnsureCapacity(s []int, minCap int) ([]int, error) {
 	}
 }
 
-// NOTE:58
+// NOTE:60
 // Верни результат append, который гарантированно не alias-ит исходный backing array s, даже если
 // в s было достаточно свободного cap.
 func AppendCopy(s []int, values ...int) []int {
@@ -359,6 +359,34 @@ func AppendCopy(s []int, values ...int) []int {
 	sl = append(sl, values...)
 	// }
 	return sl
+}
+
+// NOTE:61
+// Скопируй участок [left:right) начиная с индекса dst внутри того же слайса. Корректно обрабатывай
+// перекрывающиеся диапазоны и проверяй границы.
+func CopyWithin(s []int, dst, left, right int) error {
+	if left > right || left < 0 || right > len(s) || dst < 0 || dst > len(s) {
+		return fmt.Errorf("ou shet bab deta")
+	}
+	// fmt.Printf("%d --dst %d --left %d right %d", len(s), dst, left, right)
+	sl := make([]int, right-left)
+	length := 0
+	if dst+left-right > len(s) {
+		length = len(s) - dst
+	} else {
+		length = right - left
+	}
+	// fmt.Println()
+	// fmt.Println(length)
+	copy(sl, s[left:length+left])
+	count := 0
+	// fmt.Println(sl)
+	// fmt.Println(sl)
+	for i := dst; i < dst+length; i++ {
+		s[i] = sl[count]
+		count++
+	}
+	return nil
 }
 
 //NOTE:65 сделать
@@ -447,5 +475,10 @@ func main() {
 	fmt.Println("------------59")
 	fmt.Println("------------59")
 	fmt.Println(AppendCopy([]int{1, 2}, 1, 2, 3))
-
+	fmt.Println("------------61")
+	a1 := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(CopyWithin(a1, 1, 3, 4))
+	fmt.Println(a1)
+	fmt.Println(CopyWithin(a1, 1, 3, 6))
+	fmt.Println(a1)
 }
