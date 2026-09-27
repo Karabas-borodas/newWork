@@ -331,7 +331,7 @@ func Resize(s []int, n int) ([]int, error) {
 	return sl, nil
 }
 
-// NOTE:57
+// NOTE:58
 // Гарантируй cap >= minCap, сохранив len и значения. Если cap уже хватает, верни slice на том же
 // backing array; иначе выдели новый.
 func EnsureCapacity(s []int, minCap int) ([]int, error) {
@@ -347,6 +347,18 @@ func EnsureCapacity(s []int, minCap int) ([]int, error) {
 		m := s[:minCap]
 		return m, nil
 	}
+}
+
+// NOTE:58
+// Верни результат append, который гарантированно не alias-ит исходный backing array s, даже если
+// в s было достаточно свободного cap.
+func AppendCopy(s []int, values ...int) []int {
+	sl := make([]int, len(s))
+	copy(sl, s)
+	// for range values {
+	sl = append(sl, values...)
+	// }
+	return sl
 }
 
 //NOTE:65 сделать
@@ -417,7 +429,7 @@ func main() {
 	fmt.Println(Resize(sl, 5))
 	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
 	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
-	fmt.Println("57")
+	fmt.Println("58")
 	a, err := EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 3)
 	if err == nil {
 	}
@@ -432,4 +444,8 @@ func main() {
 		fmt.Printf("alara")
 	}
 	fmt.Printf("a== %v, cap==%d", a, cap(a))
+	fmt.Println("------------59")
+	fmt.Println("------------59")
+	fmt.Println(AppendCopy([]int{1, 2}, 1, 2, 3))
+
 }
