@@ -392,7 +392,7 @@ func CopyWithin(s []int, dst, left, right int) error {
 		return fmt.Errorf("out of range")
 	}
 	n := right - left
-	if dst < 0 || dst > len(s) {
+	if dst < 0 || dst+n > len(s) {
 		return fmt.Errorf("out of range sdt")
 	}
 
@@ -401,7 +401,7 @@ func CopyWithin(s []int, dst, left, right int) error {
 			s[dst+i] = s[left+i]
 		}
 	} else {
-		for i := n - 1; i >= 0; i++ {
+		for i := n - 1; i >= 0; i-- {
 			s[dst+i] = s[left+i]
 		}
 	}
