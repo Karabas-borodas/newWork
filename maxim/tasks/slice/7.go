@@ -365,26 +365,45 @@ func AppendCopy(s []int, values ...int) []int {
 // Скопируй участок [left:right) начиная с индекса dst внутри того же слайса. Корректно обрабатывай
 // перекрывающиеся диапазоны и проверяй границы.
 func CopyWithin(s []int, dst, left, right int) error {
-	if left > right || left < 0 || right > len(s) || dst < 0 || dst > len(s) {
-		return fmt.Errorf("ou shet bab deta")
+	// if left > right || left < 0 || right > len(s) || dst < 0 || dst > len(s) || (dst+(right-left)) > len(s) {
+	// 	return fmt.Errorf("ou shet bab deta")
+	// }
+	// // fmt.Printf("%d --dst %d --left %d right %d", len(s), dst, left, right)
+	// sl := make([]int, right-left)
+	// length := 0
+	// if dst+(left-right) > len(s) {
+	// 	length = len(s) - dst
+	// } else {
+	// 	length = right - left
+	// }
+	// // fmt.Println()
+	// // fmt.Println(length)
+	// copy(sl, s[left:length+left])
+	// count := 0
+	// // fmt.Println(sl)
+	// // fmt.Println(sl)
+	// for i := dst; i < dst+length; i++ {
+	// 	s[i] = sl[count]
+	// 	count++
+	// }
+	// return nil
+	//NOTE:нейронка
+	if left > right || left < 0 || right > len(s) {
+		return fmt.Errorf("out of range")
 	}
-	// fmt.Printf("%d --dst %d --left %d right %d", len(s), dst, left, right)
-	sl := make([]int, right-left)
-	length := 0
-	if dst+left-right > len(s) {
-		length = len(s) - dst
+	n := right - left
+	if dst < 0 || dst > len(s) {
+		return fmt.Errorf("out of range sdt")
+	}
+
+	if dst < left {
+		for i := 0; i < n; i++ {
+			s[dst+i] = s[left+i]
+		}
 	} else {
-		length = right - left
-	}
-	// fmt.Println()
-	// fmt.Println(length)
-	copy(sl, s[left:length+left])
-	count := 0
-	// fmt.Println(sl)
-	// fmt.Println(sl)
-	for i := dst; i < dst+length; i++ {
-		s[i] = sl[count]
-		count++
+		for i := n - 1; i >= 0; i++ {
+			s[dst+i] = s[left+i]
+		}
 	}
 	return nil
 }
@@ -481,4 +500,6 @@ func main() {
 	fmt.Println(a1)
 	fmt.Println(CopyWithin(a1, 1, 3, 6))
 	fmt.Println(a1)
+	a2 := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9} // len = 10
+	CopyWithin(a2, 8, 0, 5)                   // dst=8, копируем 5 элементов в позиции 8..12
 }
