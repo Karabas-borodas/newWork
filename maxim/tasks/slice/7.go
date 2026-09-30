@@ -408,6 +408,28 @@ func CopyWithin(s []int, dst, left, right int) error {
 	return nil
 }
 
+// NOTE:62
+// Реализуй вставку values через увеличение длины и copy. values может alias-ить s; функция должна
+// оставаться корректной.
+func InsertWithCopy(s []int, i int, values []int) ([]int, error) {
+	if i < 0 || i > len(s) {
+		return nil, fmt.Errorf(" out of range insert place")
+	}
+	fmt.Println(cap(s))
+	// if len(s) < len(values)+cap(s) {
+	sl := make([]int, len(s)+len(values))
+	copy(sl, s)
+	copy(sl[i:], values)
+	copy(sl[i+len(values):], s[i:])
+	return sl, nil
+	// } else {
+
+	// }
+}
+
+// return nil, nil
+// }
+
 //NOTE:65 сделать
 
 func main() {
@@ -502,4 +524,8 @@ func main() {
 	fmt.Println(a1)
 	a2 := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9} // len = 10
 	CopyWithin(a2, 8, 0, 5)                   // dst=8, копируем 5 элементов в позиции 8..12
+	fmt.Println("------------62")
+	a1 = make([]int, 15, 15)
+	// a1 = []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(InsertWithCopy(a1, 2, []int{0, 1, 2}))
 }
