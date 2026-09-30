@@ -429,6 +429,18 @@ func InsertWithCopy(s []int, i int, values []int) ([]int, error) {
 
 // return nil, nil
 // }
+// NOTE:63
+// Удаляй [left:right) in-place, сохраняя порядок, а освободившийся хвост backing array обнуляй через
+// clear, чтобы не удерживать ссылки на удалённые объекты.
+func DeleteAndClear[T any](s []T, left, right int) ([]T, error) {
+	if left < 0 || right < 0 || left > len(s) || right > len(s) {
+		return nil, fmt.Errorf("alarma out of range ")
+	}
+	count := right - left
+	copy(s[left:], s[right:])
+	clear(s[len(s)-count : len(s)])
+	return s, nil
+}
 
 //NOTE:65 сделать
 
@@ -528,4 +540,9 @@ func main() {
 	a1 = make([]int, 15, 15)
 	// a1 = []int{1, 2, 3, 4, 5, 6}
 	fmt.Println(InsertWithCopy(a1, 2, []int{0, 1, 2}))
+	fmt.Println("------------63")
+	fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
+		"5"}, 1, 2))
+	fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
+		"5"}, 1, 4))
 }
