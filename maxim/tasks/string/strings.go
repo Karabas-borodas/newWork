@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	// "strings"
 )
 
@@ -288,6 +289,26 @@ func EncodeRLE(s string) string {
 	return str
 }
 
+// NOTE:23
+// Подсчитайте слова, считая разделителями любые последовательности
+// Unicode-пробелов.
+func WordCount(s string) int {
+	strings.TrimSpace(s)
+	str := []rune(s)
+	count := 0
+	for i := 0; i < len(str); i++ {
+		if str[i] == ' ' {
+			if len(s) > i+1 {
+				if str[i+1] != ' ' {
+
+					count++
+				}
+			}
+		}
+	}
+	return count
+}
+
 func main() {
 	var stringers = "Странные дела! Awada Kedawra \n OP musorok ne shey mne SroKK"
 	fmt.Println(stringers)
@@ -326,4 +347,7 @@ func main() {
 	fmt.Println(EncodeRLE("aaassssddddd"))
 	fmt.Println(EncodeRLE("asd"))
 	fmt.Println(EncodeRLE(s))
+	fmt.Println("#23")
+	fmt.Println(WordCount("aa aa aa "))
+	fmt.Println(WordCount("  aa a a  aa "))
 }
