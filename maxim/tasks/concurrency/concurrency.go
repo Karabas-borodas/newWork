@@ -123,12 +123,16 @@ func Send3Mess() chan int {
 	ch1 := make(chan int)
 	go func() {
 		// wg.Add(3)
-		ch1 <- 10
+		ch1 <- 50
 		ch1 <- 20
 		ch1 <- 30
+		for i := 0; i < 1000; i++ {
+			ch1 <- i
+		}
 		// wg.Done()
 		// wg.Done()
 		// wg.Done()
+		close(ch1)
 	}()
 	// wg.Wait()
 	return ch1

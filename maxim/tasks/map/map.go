@@ -194,6 +194,11 @@ func GroupByParity(nums []int) map[string][]int {
 	return s
 }
 
+// NOTE: 23
+//WARNING: вообще не понятно задание
+// Напишите функцию GroupAnagrams(words []string) [][]string. Порядок групп определяется первым
+// словом каждой группы, порядок слов внутри группы должен совпадать с исходным.
+
 // func main() {
 // 	slice := []int{1, 2, 3, 4, 5, 6, 2, 3, 1, 2}
 // 	fmt.Println(slice)

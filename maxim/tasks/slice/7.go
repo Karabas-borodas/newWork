@@ -5,6 +5,19 @@ import (
 	"fmt"
 )
 
+// NOTE: 4
+func CountEven(s []int) int {
+
+	count := 0
+	// var summ float32
+	for _, v := range s {
+		if v%2 == 0 {
+			count += 1
+		}
+	}
+	return count
+}
+
 // NOTE: 7
 func IndexOf(s []int, target int) int {
 	index := -1
@@ -22,7 +35,7 @@ func IndexOf(s []int, target int) int {
 func ReverseRange(s []int, left, right int) error {
 	// var first = 0
 	// var last = 0
-	if right > len(s)-1 || left < 0 || left >= right {
+	if right > len(s) || left < 0 || left > right {
 		return fmt.Errorf("out of range")
 	}
 	for left < right {
@@ -448,101 +461,104 @@ func main() {
 	// slice := []float32{2.14, 15, 33.2}
 	slice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 9, 8}
 	slice2 := []int{1, 2, 3, 4}
-	slice3 := []int{1, 2}
+	// slice3 := []int{1, 2}
+	slice4 := []int{1}
 	// var summ float32
 	fmt.Println("7")
 	fmt.Println(IndexOf(slice, 4))
-	fmt.Println("12")
+	fmt.Println("-----12")
 	fmt.Println(ReverseRange(slice2, 0, 3))
-	fmt.Println("13")
-	fmt.Println(RemoveAt(slice3, 2))
-	fmt.Println("14")
-	fmt.Println(RemoveAtFast(slice2, 2))
-	fmt.Println("18")
-	MoveZerosToEnd(slice)
-	MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
-	MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
-	fmt.Println("18-2")
-	(MoveZerosToEnd2([]int{0, 1, 0, 3, 0, 5, 8}))
-	fmt.Println("27")
-	fmt.Println(Concat(slice2, slice3))
-	fmt.Println("29")
-	fmt.Println(Unique([]int{1, 1, 3, 4, 3, 3, 4, 4, 5, 5}))
-	fmt.Println("47")
-	fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 4))
-	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 3))
-	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 2))
-	fmt.Println(ChunkViews([]int{1, 4, 2, 3, 4, 5}, 2))
-	fmt.Println("49")
-	fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
-	fmt.Println(SplitIntoKViews([]int{1, 2}, 4))
-	// TODO:: после созвона 03.09.26
-	fmt.Println("50")
-	fmt.Println(SlidingWindowViews([]int{1, 2, 3}, 3))
-	fmt.Println(SlidingWindowViews([]int{1, 2, 3, 4}, 3))
-	fmt.Println("52")
-	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 3))
-	fmt.Println(SplitOnValue([]int{1, 2, 3, 4, 3, 6}, 3))
-	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 1))
-	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 4))
-	fmt.Println("54")
-	fmt.Println(ExpandToCap([]int{1, 2, 3, 4, 5}))
-	q := ExpandToCap(nil)
-	if q == nil {
-		fmt.Println("q==nil")
-	}
-	fmt.Println("55")
-	sl := make([]int, 4, 14)
-	fmt.Println(ClipCapacity(sl))
-
-	b := ClipCapacity(sl)
-	b[0] = 1
-	fmt.Println(cap(sl))
-	fmt.Println(sl)
-	fmt.Println(len(sl))
-	fmt.Println("56")
-	sl = make([]int, 3, 15)
-	fmt.Println(TakeWithLimitedCap(sl, 5))
-	fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 9))
-	fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 3))
-	fmt.Println("57")
-	fmt.Println(Resize(sl, 2))
-	fmt.Println(Resize(sl, 5))
-	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
-	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
-	fmt.Println("58")
-	a, err := EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 3)
-	if err == nil {
-	}
-	fmt.Printf("a== %v, cap==%d", a, cap(a))
-	a, err = EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 9)
-	if err != nil {
-	}
-	fmt.Printf("a== %v, cap==%d", a, cap(a))
-	var s []int
-	a, err = EnsureCapacity(s, -2)
-	if err != nil {
-		fmt.Printf("alara")
-	}
-	fmt.Printf("a== %v, cap==%d", a, cap(a))
-	fmt.Println("------------59")
-	fmt.Println("------------59")
-	fmt.Println(AppendCopy([]int{1, 2}, 1, 2, 3))
-	fmt.Println("------------61")
-	a1 := []int{1, 2, 3, 4, 5, 6}
-	fmt.Println(CopyWithin(a1, 1, 3, 4))
-	fmt.Println(a1)
-	fmt.Println(CopyWithin(a1, 1, 3, 6))
-	fmt.Println(a1)
-	a2 := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9} // len = 10
-	CopyWithin(a2, 8, 0, 5)                   // dst=8, копируем 5 элементов в позиции 8..12
-	fmt.Println("------------62")
-	a1 = make([]int, 15, 15)
-	// a1 = []int{1, 2, 3, 4, 5, 6}
-	fmt.Println(InsertWithCopy(a1, 2, []int{0, 1, 2}))
-	fmt.Println("------------63")
-	fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
-		"5"}, 1, 2))
-	fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
-		"5"}, 1, 4))
+	fmt.Println(ReverseRange(slice, 0, 3))
+	fmt.Println(ReverseRange(slice4, 0, 0))
+	// fmt.Println("13")
+	// fmt.Println(RemoveAt(slice3, 2))
+	// fmt.Println("14")
+	// fmt.Println(RemoveAtFast(slice2, 2))
+	// fmt.Println("18")
+	// MoveZerosToEnd(slice)
+	// MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
+	// MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
+	// fmt.Println("18-2")
+	// (MoveZerosToEnd2([]int{0, 1, 0, 3, 0, 5, 8}))
+	// fmt.Println("27")
+	// fmt.Println(Concat(slice2, slice3))
+	// fmt.Println("29")
+	// fmt.Println(Unique([]int{1, 1, 3, 4, 3, 3, 4, 4, 5, 5}))
+	// fmt.Println("47")
+	// fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 4))
+	// fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 3))
+	// fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 2))
+	// fmt.Println(ChunkViews([]int{1, 4, 2, 3, 4, 5}, 2))
+	// fmt.Println("49")
+	// fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
+	// fmt.Println(SplitIntoKViews([]int{1, 2}, 4))
+	// // TODO:: после созвона 03.09.26
+	// fmt.Println("50")
+	// fmt.Println(SlidingWindowViews([]int{1, 2, 3}, 3))
+	// fmt.Println(SlidingWindowViews([]int{1, 2, 3, 4}, 3))
+	// fmt.Println("52")
+	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 3))
+	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4, 3, 6}, 3))
+	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 1))
+	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 4))
+	// fmt.Println("54")
+	// fmt.Println(ExpandToCap([]int{1, 2, 3, 4, 5}))
+	// q := ExpandToCap(nil)
+	// if q == nil {
+	// 	fmt.Println("q==nil")
+	// }
+	// fmt.Println("55")
+	// sl := make([]int, 4, 14)
+	// fmt.Println(ClipCapacity(sl))
+	//
+	// b := ClipCapacity(sl)
+	// b[0] = 1
+	// fmt.Println(cap(sl))
+	// fmt.Println(sl)
+	// fmt.Println(len(sl))
+	// fmt.Println("56")
+	// sl = make([]int, 3, 15)
+	// fmt.Println(TakeWithLimitedCap(sl, 5))
+	// fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 9))
+	// fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 3))
+	// fmt.Println("57")
+	// fmt.Println(Resize(sl, 2))
+	// fmt.Println(Resize(sl, 5))
+	// fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
+	// fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
+	// fmt.Println("58")
+	// a, err := EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 3)
+	// if err == nil {
+	// }
+	// fmt.Printf("a== %v, cap==%d", a, cap(a))
+	// a, err = EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 9)
+	// if err != nil {
+	// }
+	// fmt.Printf("a== %v, cap==%d", a, cap(a))
+	// var s []int
+	// a, err = EnsureCapacity(s, -2)
+	// if err != nil {
+	// 	fmt.Printf("alara")
+	// }
+	// fmt.Printf("a== %v, cap==%d", a, cap(a))
+	// fmt.Println("------------59")
+	// fmt.Println("------------59")
+	// fmt.Println(AppendCopy([]int{1, 2}, 1, 2, 3))
+	// fmt.Println("------------61")
+	// a1 := []int{1, 2, 3, 4, 5, 6}
+	// fmt.Println(CopyWithin(a1, 1, 3, 4))
+	// fmt.Println(a1)
+	// fmt.Println(CopyWithin(a1, 1, 3, 6))
+	// fmt.Println(a1)
+	// a2 := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9} // len = 10
+	// CopyWithin(a2, 8, 0, 5)                   // dst=8, копируем 5 элементов в позиции 8..12
+	// fmt.Println("------------62")
+	// a1 = make([]int, 15, 15)
+	// // a1 = []int{1, 2, 3, 4, 5, 6}
+	// fmt.Println(InsertWithCopy(a1, 2, []int{0, 1, 2}))
+	// fmt.Println("------------63")
+	// fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
+	// 	"5"}, 1, 2))
+	// fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
+	// 	"5"}, 1, 4))
 }

@@ -61,8 +61,23 @@ func main() {
 	fmt.Println(SuNonNegative([]int{-3, -1, 2, -5}))
 	fmt.Println("----11------")
 	ch5 := Send3Mess()
-	fmt.Println(<-ch5, <-ch5, <-ch5)
+	sl := make([]int, 3)
+	//WARNING:
+	//NOTE: go rutina легковесный поток
+	//у системы есть треды планировщик распределяет на треды
+	// как устроен планирвщик в го (будут придираться)
+	//л
+	// for v := range <-ch5 {
+	// 	sl = append(sl, v)
+	// }
+	for v := range ch5 {
+		//fmt.Println(ok)
+		sl = append(sl, v)
+	}
+	fmt.Println(sl)
 	// for v := range ch5 {
 	// 	fmt.Println(v)
+
+
 	// }
-}
+}ka
