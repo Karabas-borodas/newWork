@@ -64,7 +64,7 @@ func ReverseRange(s []int, left, right int) error {
 // NOTE:13
 func RemoveAt(s []int, i int) ([]int, error) {
 	if i < 0 || i > len(s)-1 || len(s) == 0 {
-		return s, fmt.Errorf("out of range")
+		return nil, fmt.Errorf("out of range")
 	}
 	s = append(s[:i], s[i+1:]...)
 	return s, nil
@@ -73,7 +73,9 @@ func RemoveAt(s []int, i int) ([]int, error) {
 // NOTE:14
 // XXX:чем оличается от 13 если у нас поиск по индексу O(n)?
 func RemoveAtFast(s []int, i int) ([]int, error) {
-	// if
+	if i < 0 || i > len(s)-1 || len(s) == 0 {
+		return nil, fmt.Errorf("out of range")
+	}
 	s[i] = s[len(s)-1]
 	s = s[:len(s)-1]
 	return s, nil
@@ -169,16 +171,17 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 	countChank := (len(s) + size - 1) / size
 
 	slice := make([][]int, countChank)
-	count := size - 1
-	lavelSlice := 0
-	var sl []int
-	slice[0] = sl
-	for i, v := range s {
-		slice[lavelSlice] = append(slice[lavelSlice], v)
-		if i == count {
-			count += size
-			lavelSlice++
+	lastIndex := size
+	lavelSlice := 1
+	// var sl []int
+	// slice[0] = sl
+	for i := 0; i < len(s); i += size {
+		if lastIndex > len(s) {
+			lastIndex = len(s)
 		}
+		slice[lavelSlice-1] = s[i:lastIndex]
+		lavelSlice++
+		lastIndex = lavelSlice * size
 	}
 	return slice, nil
 	//NOTE:нейронка
@@ -205,9 +208,10 @@ func ChunkViews(s []int, size int) ([][]int, error) {
 }
 
 // NOTE:49 сделать
+// BUG: несовсем понятно что именлсь ввиду (уточнить исплавления)
 func SplitIntoKViews(s []int, k int) ([][]int, error) {
 	if len(s) < 1 {
-		return [][]int{}, nil
+		return nil, fmt.Errorf("aaaaa all bad")
 	}
 	if k < 1 {
 		return nil, fmt.Errorf("aaaaa all bad")
@@ -256,18 +260,20 @@ func SlidingWindowViews(s []int, size int) ([][]int, error) {
 		return nil, fmt.Errorf("size >%d", len(s))
 	}
 	var slice [][]int
-	countChank := len(s) / size
-	lastChankLength := len(s) - countChank*size
+	// countChank := len(s) / size
+	// lastChankLength := len(s) - countChank*size
 	i := 0
-	for i < countChank {
-		chank := s[i*size : (i+1)*size]
+	lastIndex := size
+	for lastIndex <= len(s) {
+		chank := s[i:lastIndex]
 		slice = append(slice, chank)
 		i++
+		lastIndex++
 	}
-	if lastChankLength > 0 {
-		chank := s[len(s)-lastChankLength : len(s)]
-		slice = append(slice, chank)
-	}
+	// if lastChankLength > 0 {
+	// 	chank := s[len(s)-lastChankLength : len(s)]
+	// 	slice = append(slice, chank)
+	// }
 	// slice[0][0] = -9
 	// fmt.Println(s)
 	return slice, nil
@@ -279,25 +285,33 @@ func SplitOnValue(s []int, sep int) [][]int {
 	last := 0
 	first := 0
 	for i, v := range s {
-		if v == sep && i != 0 && i != len(s)-1 {
+		if v == sep && i != 0 && i != len(s) {
 
 			last = i
 			slice = append(slice, s[first:last])
 			// slice = append(s[first:last])
 			first = i + 1
 		}
+		if v == sep && i == 0 {
+			first = 1
+		}
 	}
-	slice = append(slice, s[first:])
+	if first != len(s) {
+
+		slice = append(slice, s[first:])
+	}
 	return slice
 }
 
 // NOTE:54
 func ExpandToCap(s []int) []int {
 	fmt.Println(cap(s))
-	sl := make([]int, cap(s))
+	// sl := make([]int, cap(s))
 	if s == nil {
+
 		return nil
 	}
+	sl := s[:len(s)]
 	return sl
 }
 
@@ -305,8 +319,10 @@ func ExpandToCap(s []int) []int {
 // Верни slice view с теми же элементами, но cap результата должен быть ровно len(s). Новый backing
 // array создавать нельзя.
 func ClipCapacity(s []int) []int {
-	sa := s[0:]
-
+	if s == nil {
+		return nil
+	}
+	sa := s[0:len(s):len(s)]
 	return sa
 }
 
@@ -338,7 +354,7 @@ func Resize(s []int, n int) ([]int, error) {
 		return slice, nil
 	}
 	sl := s[:len(s)]
-	for range n - len(s) - 1 {
+	for range n - len(s) {
 		sl = append(sl, 0)
 	}
 	return sl, nil
@@ -351,15 +367,13 @@ func EnsureCapacity(s []int, minCap int) ([]int, error) {
 	if minCap < 0 {
 		return nil, fmt.Errorf("alarma min<0")
 	}
-	if cap(s) < minCap {
-		m := make([]int, minCap, minCap)
-		fmt.Println(cap(m))
-		copy(m, s)
-		return m, nil
-	} else {
-		m := s[:minCap]
-		return m, nil
+	if cap(s) >= minCap {
+		return s, nil
 	}
+	m := make([]int, len(s), minCap)
+	copy(m, s)
+	return m, nil
+
 }
 
 // NOTE:60
@@ -461,7 +475,7 @@ func main() {
 	// slice := []float32{2.14, 15, 33.2}
 	slice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 9, 8}
 	slice2 := []int{1, 2, 3, 4}
-	// slice3 := []int{1, 2}
+	slice3 := []int{1, 2}
 	slice4 := []int{1}
 	// var summ float32
 	fmt.Println("7")
@@ -470,83 +484,122 @@ func main() {
 	fmt.Println(ReverseRange(slice2, 0, 3))
 	fmt.Println(ReverseRange(slice, 0, 3))
 	fmt.Println(ReverseRange(slice4, 0, 0))
-	// fmt.Println("13")
-	// fmt.Println(RemoveAt(slice3, 2))
-	// fmt.Println("14")
-	// fmt.Println(RemoveAtFast(slice2, 2))
-	// fmt.Println("18")
-	// MoveZerosToEnd(slice)
-	// MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
-	// MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
-	// fmt.Println("18-2")
-	// (MoveZerosToEnd2([]int{0, 1, 0, 3, 0, 5, 8}))
-	// fmt.Println("27")
-	// fmt.Println(Concat(slice2, slice3))
-	// fmt.Println("29")
-	// fmt.Println(Unique([]int{1, 1, 3, 4, 3, 3, 4, 4, 5, 5}))
-	// fmt.Println("47")
-	// fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 4))
-	// fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 3))
-	// fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 2))
-	// fmt.Println(ChunkViews([]int{1, 4, 2, 3, 4, 5}, 2))
-	// fmt.Println("49")
-	// fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
-	// fmt.Println(SplitIntoKViews([]int{1, 2}, 4))
-	// // TODO:: после созвона 03.09.26
-	// fmt.Println("50")
-	// fmt.Println(SlidingWindowViews([]int{1, 2, 3}, 3))
-	// fmt.Println(SlidingWindowViews([]int{1, 2, 3, 4}, 3))
-	// fmt.Println("52")
-	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 3))
-	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4, 3, 6}, 3))
-	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 1))
-	// fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 4))
-	// fmt.Println("54")
-	// fmt.Println(ExpandToCap([]int{1, 2, 3, 4, 5}))
-	// q := ExpandToCap(nil)
-	// if q == nil {
-	// 	fmt.Println("q==nil")
-	// }
-	// fmt.Println("55")
-	// sl := make([]int, 4, 14)
-	// fmt.Println(ClipCapacity(sl))
-	//
-	// b := ClipCapacity(sl)
-	// b[0] = 1
-	// fmt.Println(cap(sl))
-	// fmt.Println(sl)
-	// fmt.Println(len(sl))
-	// fmt.Println("56")
-	// sl = make([]int, 3, 15)
-	// fmt.Println(TakeWithLimitedCap(sl, 5))
-	// fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 9))
-	// fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 3))
-	// fmt.Println("57")
-	// fmt.Println(Resize(sl, 2))
-	// fmt.Println(Resize(sl, 5))
-	// fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
-	// fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
-	// fmt.Println("58")
-	// a, err := EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 3)
-	// if err == nil {
-	// }
-	// fmt.Printf("a== %v, cap==%d", a, cap(a))
-	// a, err = EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 9)
-	// if err != nil {
-	// }
-	// fmt.Printf("a== %v, cap==%d", a, cap(a))
-	// var s []int
-	// a, err = EnsureCapacity(s, -2)
-	// if err != nil {
-	// 	fmt.Printf("alara")
-	// }
-	// fmt.Printf("a== %v, cap==%d", a, cap(a))
-	// fmt.Println("------------59")
-	// fmt.Println("------------59")
-	// fmt.Println(AppendCopy([]int{1, 2}, 1, 2, 3))
-	// fmt.Println("------------61")
-	// a1 := []int{1, 2, 3, 4, 5, 6}
-	// fmt.Println(CopyWithin(a1, 1, 3, 4))
+	fmt.Println("13")
+	fmt.Println(RemoveAt(slice3, 2))
+	fmt.Println("14")
+	fmt.Println(RemoveAtFast(slice2, 2))
+	// fmt.Println(RemoveAtFast(slice2, 8))
+	fmt.Println("18")
+	MoveZerosToEnd(slice)
+	MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
+	MoveZerosToEnd([]int{0, 1, 0, 3, 0, 5, 8})
+	fmt.Println("18-2")
+	(MoveZerosToEnd2([]int{0, 1, 0, 3, 0, 5, 8}))
+	fmt.Println("27")
+	fmt.Println(Concat(slice2, slice3))
+	fmt.Println("29")
+	fmt.Println(Unique([]int{1, 1, 3, 4, 3, 3, 4, 4, 5, 5}))
+	fmt.Println("47")
+	fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 7))
+	fmt.Println(ChunkViews([]int{1, 1, 3, 4}, 4))
+	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 3))
+	fmt.Println(ChunkViews([]int{1, 4, 2, 3}, 2))
+	fmt.Println(ChunkViews([]int{1, 4, 2, 3, 4, 5}, 2))
+	fmt.Println("49")
+	fmt.Println(SplitIntoKViews([]int{1, 4, 2, 3}, 3))
+	fmt.Println(SplitIntoKViews([]int{1, 2}, 4))
+	fmt.Println(SplitIntoKViews([]int{}, 4))
+	fmt.Println(SplitIntoKViews([]int{}, -2))
+	// TODO:: после созвона 03.09.26
+	fmt.Println("50")
+	slice1 := []int{1, 2, 3, 4}
+	slice5, _ := SlidingWindowViews(slice1, 2)
+	fmt.Println(slice5)
+	slice5[0][0] = 8
+	fmt.Println(slice1)
+	fmt.Println(SlidingWindowViews([]int{1, 2, 3, 4}, 3))
+	fmt.Println("52")
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 3))
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4, 3, 6}, 3))
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 1))
+	fmt.Println(SplitOnValue([]int{1, 2, 3, 4}, 4))
+	fmt.Println("54")
+	slice1 = []int{}
+	slice1 = append(make([]int, 0, 18), 1, 2, 3, 4, 5, 6)
+
+	slice2 = []int{}
+	slice2 = ExpandToCap(slice1)
+	slice2[3] = 19
+	fmt.Println(slice1)
+	fmt.Println(slice2)
+	fmt.Println("len slice1--", len(slice1))
+	fmt.Println("cap slice1--", cap(slice1))
+	fmt.Println("len slice2--", len(slice2))
+	fmt.Println("cap slice2--", cap(slice2))
+	q := ExpandToCap(nil)
+	if q == nil {
+		fmt.Println("q==nil")
+	}
+	fmt.Println("55")
+	slice1 = []int{}
+	slice1 = append(make([]int, 0, 18), 1, 2, 3, 4, 5, 6)
+
+	slice2 = []int{}
+	slice2 = ClipCapacity(slice1)
+	slice2[3] = 19
+	fmt.Println(slice1)
+	fmt.Println(slice2)
+	fmt.Println("len slice1--", len(slice1))
+	fmt.Println("cap slice1--", cap(slice1))
+	fmt.Println("len slice2--", len(slice2))
+	fmt.Println("cap slice2--", cap(slice2))
+	fmt.Println(ClipCapacity(nil))
+	fmt.Println("56")
+	sl := make([]int, 3, 15)
+	fmt.Println(TakeWithLimitedCap(sl, 5))
+	fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 9))
+	fmt.Println(TakeWithLimitedCap([]int{1, 2, 3, 4, 5, 6}, 3))
+	fmt.Println("57")
+	fmt.Println(Resize(sl, 2))
+	fmt.Println(Resize([]int{}, 3))
+	fmt.Println(Resize(sl, 5))
+	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 9))
+	fmt.Println(Resize([]int{1, 2, 3, 4, 5, 6}, 3))
+	fmt.Println("58")
+	a, err := EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 3)
+	if err == nil {
+	}
+	fmt.Printf("a== %v, cap==%d\n", a, cap(a))
+	a, err = EnsureCapacity([]int{1, 2, 3, 4, 5, 6}, 9)
+	if err != nil {
+	}
+	fmt.Printf("a== %v, cap==%d\n", a, cap(a))
+	var s []int
+	a, err = EnsureCapacity(s, -2)
+	if err != nil {
+		fmt.Printf("alara")
+	}
+	fmt.Printf("a== %v, cap==%d\n", a, cap(a))
+	slice1 = []int{}
+	slice1 = append(make([]int, 0, 18), 1, 2, 3, 4, 5, 6)
+
+	// slice2 = []int{}
+	slice7, _ := EnsureCapacity(slice1, 3)
+	// slice2 = EnsureCapacity(slice1, 3)
+	slice2[3] = 19
+	fmt.Println(slice7)
+	fmt.Println(slice7)
+	fmt.Println("len slice1--", len(slice1))
+	fmt.Println("cap slice1--", cap(slice1))
+	fmt.Println("len slice2--", len(slice7))
+	fmt.Println("cap slice2--", cap(slice7))
+	fmt.Println(ClipCapacity(nil))
+	fmt.Println("------------59")
+	fmt.Println("------------59")
+	fmt.Println(AppendCopy([]int{1, 2}, 1, 2, 3))
+	fmt.Println("------------61")
+	a1 := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(CopyWithin(a1, 2, 0, 4))
 	// fmt.Println(a1)
 	// fmt.Println(CopyWithin(a1, 1, 3, 6))
 	// fmt.Println(a1)
