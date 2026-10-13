@@ -25,7 +25,8 @@ func main() {
 	maq := map[string][]int{"1": {1, 2, 3},
 		"2": {2, 3, 4}}
 	maa := Clone(maq)
-	maq["1"] = []int{3}
+	maq["1"][0] = 3
+	//maq["1"] = []int{3}
 	fmt.Println((maa))
 	fmt.Println(maq)
 	fmt.Println("#12")
@@ -43,6 +44,7 @@ func main() {
 	fmt.Println(AreAnagrams("ab", "Aa"))
 	fmt.Println("#19")
 	fmt.Println(WordFrequency("aa aa aa ad ad "))
-	fmt.Println("#21")
-	fmt.Println(GroupByParity([]int{1, 2, 3, 4, 5, 6, 8, 9, 6}))
+	fmt.Println(WordFrequency("aaaa, aaaa& ll4Y aa, ad ad "))
+	// fmt.Println("#21")
+	// fmt.Println(GroupByParity([]int{1, 2, 3, 4, 5, 6, 8, 9, 6}))
 }

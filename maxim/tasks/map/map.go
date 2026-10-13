@@ -5,6 +5,7 @@ import (
 	"math"
 	"sort"
 	"strings"
+	"unicode"
 )
 
 var mas = map[string]int{
@@ -73,7 +74,12 @@ func DeleteZeroValues(m map[string]int) {
 func Clone(m map[string][]int) map[string][]int {
 	ma := make(map[string][]int)
 	for i, v := range m {
-		ma[i] = v
+
+		c := make([]int, len(v))
+		for i, variable := range v {
+			c[i] = variable
+		}
+		ma[i] = c
 	}
 	// ma["1"] = []int{5, 6}
 	// m["1"] = []int{7, 7}
@@ -126,7 +132,7 @@ func MostFrequent(nums []int) (value int, count int, ok bool) {
 		}
 	}
 	for v := range m {
-		if m[v] >= count && v < value {
+		if m[v] > count || (m[v] == count && v < value) {
 			count = m[v]
 			value = v
 		}
@@ -139,19 +145,21 @@ func AreAnagrams(a, b string) bool {
 	if len(a) != len(b) {
 		return false
 	}
-	stA := strings.ToLower(a)
-	stB := strings.ToLower(b)
-	ma := map[string]struct{}{}
-	ma[stA] = struct{}{}
-	if _, ok := ma[stB]; !ok {
-		return false
+	stA := []rune(strings.ToLower(a))
+	stB := []rune(strings.ToLower(b))
+	ma := make(map[rune]int)
+	for _, v := range stA {
+		ma[v]++
 	}
-	// for i := 0; i < len(stA); i++ {
-	// 	if stA[i] != stB[i] {
-	// 		return false
-	// 	}
-	//
-	// }
+	for _, v := range stB {
+		ma[v]--
+	}
+	for _, c := range ma {
+		if c != 0 {
+			return false
+		}
+	}
+
 	return true
 
 }
@@ -160,19 +168,29 @@ func AreAnagrams(a, b string) bool {
 // Напишите функцию WordFrequency(text string) map[string]int. Словом считается непрерывная
 // последовательность Unicode-букв или цифр; регистр не учитывается.
 func WordFrequency(text string) map[string]int {
-	count := 0
+
 	// firsrCount := 0
-	st := strings.ToLower(text)
+	st := []rune(strings.ToLower(text))
 	mp := map[string]int{}
-	for i := 0; i < len(st); i++ {
-		if st[i] == ' ' {
-			mp[st[count:i]]++
-			count = i + 1
+	start := -1 // -1 = "не внутри слова"
+	for i, r := range st {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+			if start == -1 {
+				start = i // начало слова
+			}
+		} else {
+			if start != -1 {
+				mp[string(st[start:i])]++
+				start = -1
+			}
 		}
 	}
-	if count < len(st) {
-		mp[st[count:len(st)]]++
+	if start != -1 {
+		mp[string(st[start:])]++
 	}
+	// if first< len(st) {
+	// 	mp[string([first:len(st)])]++
+	// }
 	return mp
 
 }
