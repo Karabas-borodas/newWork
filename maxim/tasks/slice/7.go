@@ -611,13 +611,13 @@ func main() {
 	CopyWithin(a2, 8, 0, 5)                   // dst=8, копируем 5 элементов в позиции 8..12
 	maxInt := int(^uint(0) >> 1)
 	CopyWithin([]int{1, 2, 3, 4}, maxInt, 0, 1)
-	// // fmt.Println("------------62")
-	// // a1 = make([]int, 15, 15)
-	// // // a1 = []int{1, 2, 3, 4, 5, 6}
-	// // fmt.Println(InsertWithCopy(a1, 2, []int{0, 1, 2}))
-	// // fmt.Println("------------63")
-	// // fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
-	// // 	"5"}, 1, 2))
-	// // fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
-	// // 	"5"}, 1, 4))
+	fmt.Println("------------62")
+	a1 = make([]int, 15, 15)
+	// a1 = []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(InsertWithCopy(a1, 2, []int{0, 1, 2}))
+	fmt.Println("------------63")
+	fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
+		"5"}, 1, 2))
+	fmt.Println(DeleteAndClear([]string{"1", "2", "3", "4",
+		"5"}, 1, 4))
 }

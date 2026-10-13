@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
 	// "strings"
 )
 
@@ -60,26 +61,34 @@ func IsPalindrome(s string) bool {
 
 // NOTE:10
 func NormalizeSpaces(s string) string {
-	count := 0
-	r := []rune(s)
-	for i := 0; i < len(r)-1; i++ {
-		if s[i] == ' ' {
-			count += 1
-		} else {
-			break
-		}
+	var out []rune
+	inSpace := false
 
-	}
-	r = r[count:]
-	for i := len(r) - 1; i > 0; i-- {
-		if r[i] == ' ' {
-			r = r[:i]
-		} else {
-			break
+	for _, r := range s {
+		if unicode.IsSpace(r) {
+			inSpace = true
+			continue
 		}
-
+		if inSpace && len(out) > 0 {
+			out = append(out, ' ')
+		}
+		inSpace = false
+		out = append(out, r)
 	}
-	return string(r)
+
+	return string(out)
+	// if unicode.IsSpace(len(r)-1 ){
+	//
+	// }
+	// r = r[count:]
+	// for i := len(r) - 1; i > 0; i-- {
+	// 	if unicode.IsSpace(r[i]) {
+	// 		r = r[:i]
+	// 	} else {
+	// 		break
+	// 	}
+	//
+	// }
 }
 
 // NOTE:12
@@ -325,29 +334,30 @@ func main() {
 	fmt.Println(NormalizeSpaces("аЛ   аШ  "))
 	fmt.Println(NormalizeSpaces("     "))
 	fmt.Println(NormalizeSpaces(" a b "))
-	fmt.Println("#12")
-	fmt.Println(IndexOf(stringers, "дела"))
-	fmt.Println(IndexOf("ab", "x"))
-	fmt.Println("#14")
-	fmt.Println(CountOverlapping("aaaa", "aa"))
-	fmt.Println(CountOverlapping("aaaa", "aa"))
-	fmt.Println(CountOverlapping("aaaa", ""))
-	fmt.Println(CountOverlapping("aa  aa", "aa"))
-	fmt.Println("#16")
-	fmt.Println(LongestCommonPrefix([]string{"aaa", "aasss", "aaab"}))
-	fmt.Println(LongestCommonPrefix([]string{"", "aasss", "aaab"}))
-	fmt.Println(LongestCommonPrefix([]string{"abc", "aasss", "aaab"}))
-	fmt.Println("#18")
-	fmt.Println(Join([]string{"1", "12", "4"}, "+"))
-	fmt.Println(Join([]string{"р", "1н2", "4"}, "+"))
-	fmt.Println(Join([]string{}, ""))
-	fmt.Println("#21")
-	fmt.Println(EncodeRLE("aaassssddd"))
-	var s string
-	fmt.Println(EncodeRLE("aaassssddddd"))
-	fmt.Println(EncodeRLE("asd"))
-	fmt.Println(EncodeRLE(s))
-	fmt.Println("#23")
-	fmt.Println(WordCount("aa aa aa "))
-	fmt.Println(WordCount("  aa a a  aa "))
+	fmt.Println(NormalizeSpaces(" 12333"))
+	// fmt.Println("#12")
+	// fmt.Println(IndexOf(stringers, "дела"))
+	// fmt.Println(IndexOf("ab", "x"))
+	// fmt.Println("#14")
+	// fmt.Println(CountOverlapping("aaaa", "aa"))
+	// fmt.Println(CountOverlapping("aaaa", "aa"))
+	// fmt.Println(CountOverlapping("aaaa", ""))
+	// fmt.Println(CountOverlapping("aa  aa", "aa"))
+	// fmt.Println("#16")
+	// fmt.Println(LongestCommonPrefix([]string{"aaa", "aasss", "aaab"}))
+	// fmt.Println(LongestCommonPrefix([]string{"", "aasss", "aaab"}))
+	// fmt.Println(LongestCommonPrefix([]string{"abc", "aasss", "aaab"}))
+	// fmt.Println("#18")
+	// fmt.Println(Join([]string{"1", "12", "4"}, "+"))
+	// fmt.Println(Join([]string{"р", "1н2", "4"}, "+"))
+	// fmt.Println(Join([]string{}, ""))
+	// fmt.Println("#21")
+	// fmt.Println(EncodeRLE("aaassssddd"))
+	// var s string
+	// fmt.Println(EncodeRLE("aaassssddddd"))
+	// fmt.Println(EncodeRLE("asd"))
+	// fmt.Println(EncodeRLE(s))
+	// fmt.Println("#23")
+	// fmt.Println(WordCount("aa aa aa "))
+	// fmt.Println(WordCount("  aa a a  aa "))
 }
