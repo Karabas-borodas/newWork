@@ -5,6 +5,15 @@ import (
 	"fmt"
 )
 
+// NOTE: 1
+func Sum(s []int) int {
+	var summ int
+	for _, v := range s {
+		summ += v
+	}
+	return summ
+}
+
 // NOTE: 4
 func CountEven(s []int) int {
 
@@ -482,7 +491,9 @@ func main() {
 	slice3 := []int{1, 2}
 	slice4 := []int{1}
 	// var summ float32
-	fmt.Println("7")
+	fmt.Println("-----1")
+	fmt.Println(Sum(slice3))
+	fmt.Println("----7")
 	fmt.Println(IndexOf(slice, 4))
 	fmt.Println("-----12")
 	fmt.Println(ReverseRange(slice2, 0, 3))
