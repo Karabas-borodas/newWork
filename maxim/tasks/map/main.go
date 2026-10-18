@@ -40,11 +40,13 @@ func main() {
 	fmt.Println(MostFrequent([]int{1, 1, 1, 2, 2}))
 	fmt.Println(MostFrequent([]int{2, 2, 1, 1, 3}))
 	fmt.Println("#18")
-	fmt.Println(AreAnagrams("aA", "Aa"))
+	fmt.Println(AreAnagrams("a\t A", "A \ta"))
 	fmt.Println(AreAnagrams("ab", "Aa"))
-	fmt.Println("#19")
-	fmt.Println(WordFrequency("aa aa aa ad ad "))
-	fmt.Println(WordFrequency("aaaa, aaaa& ll4Y aa, ad ad "))
+	fmt.Println(
+		AreAnagrams("кот ", "ток"))
+	// fmt.Println("#19"
+	// fmt.Println(WordFrequency("aa aa aa ad ad "))
+	// fmt.Println(WordFrequency("aaaa, aaaa& ll4Y aa, ad ad "))
 	// fmt.Println("#21")
 	// fmt.Println(GroupByParity([]int{1, 2, 3, 4, 5, 6, 8, 9, 6}))
 }

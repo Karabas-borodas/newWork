@@ -142,11 +142,23 @@ func MostFrequent(nums []int) (value int, count int, ok bool) {
 
 // NOTE:18
 func AreAnagrams(a, b string) bool {
-	if len(a) != len(b) {
+	stA := []rune(strings.TrimSpace(strings.ToLower(a)))
+	stB := []rune(strings.TrimSpace(strings.ToLower(b)))
+	var stAA []rune
+	var stBB []rune
+	for _, v := range stA {
+		if !unicode.IsSpace(v) {
+			stAA = append(stAA, v)
+		}
+	}
+	for _, v := range stB {
+		if !unicode.IsSpace(v) {
+			stBB = append(stBB, v)
+		}
+	}
+	if len(stAA) != len(stBB) {
 		return false
 	}
-	stA := []rune(strings.ToLower(a))
-	stB := []rune(strings.ToLower(b))
 	ma := make(map[rune]int)
 	for _, v := range stA {
 		ma[v]++
