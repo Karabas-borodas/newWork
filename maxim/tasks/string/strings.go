@@ -93,23 +93,23 @@ func NormalizeSpaces(s string) string {
 
 // NOTE:12
 func IndexOf(s, sub string) int {
+	rs := []rune(s)
+	rsub := []rune(sub)
 	if len(s) == 0 {
 		return -1
 
 	}
-	if len(sub) > len(s) {
+	if len(rsub) > len(s) {
 		return -1
 	}
-	subIndex := 0
 	for i := 0; i < len(s); i++ {
-		if s[i] == sub[subIndex] && subIndex < len(sub)-1 {
-			subIndex += 1
-		} else if subIndex == len(sub)-1 && s[i] == sub[subIndex] {
-			return i - subIndex
-		} else {
-			subIndex = 0
+		j := 0
+		for j < len(rsub) && rs[i+j] == rsub[j] {
+			j++
 		}
-
+		if j == len(rsub) {
+			return i
+		}
 	}
 	return -1
 }
@@ -271,21 +271,20 @@ func EncodeRLE(s string) string {
 		fmt.Errorf("zero veluse")
 		return ""
 	}
-	if s == "" {
-
-		return ""
-	}
-	counte := 1
+	count := 1
 	r := []rune(s)
 	var str string
-	for i := 1; i < len(s); i++ {
-		if r[i] == r[i-1] {
-			counte++
-		} else {
 
-			str = str + strconv.Itoa(counte)
-			str = str + string(r[i-1])
-			counte = 1
+	for i := 1; i < len(r); i++ {
+		if r[i] == r[i-1] {
+			count++
+		} else {
+			if !unicode.IsSymbol(r[i]) {
+
+				str = str + strconv.Itoa(count)
+				str = str + string(r[len(r[len(r)-1:])])
+				count = 1
+			}
 		}
 		// if i == len(s)-1 {
 		//
@@ -293,7 +292,7 @@ func EncodeRLE(s string) string {
 		// 	str = str + string(r[i-1])
 		// }
 	}
-	str = str + strconv.Itoa(counte)
+	str = str + strconv.Itoa(count)
 	str = str + string(r[len(s)-1])
 	return str
 }
@@ -335,30 +334,32 @@ func main() {
 	fmt.Println(NormalizeSpaces("     "))
 	fmt.Println(NormalizeSpaces(" a b "))
 	fmt.Println(NormalizeSpaces(" 12333"))
-	fmt.Println("#12")
+	fmt.Println("------#12")
 	fmt.Println(IndexOf(stringers, "дела"))
 	fmt.Println(IndexOf("ab", "x"))
 	fmt.Println(IndexOf(stringers, "Kedawra \n"))
 	fmt.Println(IndexOf("ab", "ab"))
-	// fmt.Println("#14")
-	// fmt.Println(CountOverlapping("aaaa", "aa"))
-	// fmt.Println(CountOverlapping("aaaa", "aa"))
-	// fmt.Println(CountOverlapping("aaaa", ""))
-	// fmt.Println(CountOverlapping("aa  aa", "aa"))
-	// fmt.Println("#16")
-	// fmt.Println(LongestCommonPrefix([]string{"aaa", "aasss", "aaab"}))
-	// fmt.Println(LongestCommonPrefix([]string{"", "aasss", "aaab"}))
-	// fmt.Println(LongestCommonPrefix([]string{"abc", "aasss", "aaab"}))
-	// fmt.Println("#18")
-	// fmt.Println(Join([]string{"1", "12", "4"}, "+"))
-	// fmt.Println(Join([]string{"р", "1н2", "4"}, "+"))
-	// fmt.Println(Join([]string{}, ""))
-	// fmt.Println("#21")
-	// fmt.Println(EncodeRLE("aaassssddd"))
-	// var s string
-	// fmt.Println(EncodeRLE("aaassssddddd"))
-	// fmt.Println(EncodeRLE("asd"))
-	// fmt.Println(EncodeRLE(s))
+	fmt.Println(IndexOf("aab", "ab"))
+	fmt.Println("#14")
+	fmt.Println(CountOverlapping("aaaa", "aa"))
+	fmt.Println(CountOverlapping("aaaa", "aa"))
+	fmt.Println(CountOverlapping("aaaa", ""))
+	fmt.Println(CountOverlapping("aa  aa", "aa"))
+	fmt.Println("#16")
+	fmt.Println(LongestCommonPrefix([]string{"aaa", "aasss", "aaab"}))
+	fmt.Println(LongestCommonPrefix([]string{"", "aasss", "aaab"}))
+	fmt.Println(LongestCommonPrefix([]string{"abc", "aasss", "aaab"}))
+	fmt.Println("#18")
+	fmt.Println(Join([]string{"1", "12", "4"}, "+"))
+	fmt.Println(Join([]string{"р", "1н2", "4"}, "+"))
+	fmt.Println(Join([]string{}, ""))
+	fmt.Println("#21")
+	fmt.Println(EncodeRLE("aaassssddd"))
+	var s string
+	fmt.Println(EncodeRLE("aaassssddddd"))
+	fmt.Println(EncodeRLE("asd"))
+	fmt.Println(EncodeRLE(s))
+	fmt.Println(EncodeRLE("яя"))
 	// fmt.Println("#23")
 	// fmt.Println(WordCount("aa aa aa "))
 	// fmt.Println(WordCount("  aa a a  aa "))

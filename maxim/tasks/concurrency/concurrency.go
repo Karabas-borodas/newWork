@@ -10,7 +10,7 @@ import (
 func firstMassage() chan string {
 	var ch = make(chan string)
 	go func() {
-		ch <- "hell"
+		ch <- "hello"
 		// close(ch)
 	}()
 	return ch
@@ -26,10 +26,10 @@ func Double(n int) int {
 	ch1 := make(chan int)
 	go func(n int) {
 		if n > 0 {
-			n *= n
+			n *= 2
 			ch1 <- n
 		} else {
-			n *= n * -1
+			n *= 2 * -1
 			ch1 <- n
 		}
 	}(n)
@@ -37,20 +37,22 @@ func Double(n int) int {
 }
 
 // NOTE:4
+func gr(str string, ch chan<- string) {
+	ch <- fmt.Sprintf("Привет %s", str)
+}
+
 func Greet(name string) string {
 	ch1 := make(chan string)
-	go func(name string) {
-		ch1 <- fmt.Sprintf("Привет %s", name)
-	}(name)
+	go gr(name, ch1)
 	return <-ch1
 }
 
 // NOTE:5
 func SumAsync(nums []int) int {
 	chan1 := make(chan int)
-	summ := 0
-	go func([]int) {
-		for _, v := range nums {
+	go func(n []int) {
+		summ := 0
+		for _, v := range n {
 
 			summ += v
 		}
@@ -103,7 +105,7 @@ func AnalyzePair(a, b int) PairInfo {
 }
 
 // NOTE:10
-func SuNonNegative(nums []int) int {
+func SumNonNegative(nums []int) int {
 	summ := 0
 	ch1 := make(chan int)
 	go func() {
@@ -126,9 +128,9 @@ func Send3Mess() chan int {
 		ch1 <- 50
 		ch1 <- 20
 		ch1 <- 30
-		for i := 0; i < 1000; i++ {
-			ch1 <- i
-		}
+		// for i := 0; i < 1000; i++ {
+		// 	ch1 <- i
+		// }
 		// wg.Done()
 		// wg.Done()
 		// wg.Done()
@@ -137,3 +139,5 @@ func Send3Mess() chan int {
 	// wg.Wait()
 	return ch1
 }
+
+// NOTE:11

@@ -58,7 +58,7 @@ func main() {
 	fmt.Println(AnalyzePair(2, 1))
 	// go fmt.Println(AnalyzePair(1, 1))
 	fmt.Println("----10------")
-	fmt.Println(SuNonNegative([]int{-3, -1, 2, -5}))
+	fmt.Println(SumNonNegative([]int{-3, -1, 2, -5}))
 	fmt.Println("----11------")
 	ch5 := Send3Mess()
 	sl := make([]int, 3)
@@ -78,6 +78,5 @@ func main() {
 	// for v := range ch5 {
 	// 	fmt.Println(v)
 
-
 	// }
-}ka
+}
