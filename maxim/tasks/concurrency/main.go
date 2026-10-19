@@ -79,4 +79,20 @@ func main() {
 	// 	fmt.Println(v)
 
 	// }
+	fmt.Println("----12------")
+	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	fmt.Println(CopyThroughChannel(nums))
+	nums1 := []int{4, 4, -1}
+	fmt.Println(CopyThroughChannel(nums1))
+
+	fmt.Println("----13------")
+	chStr := make(chan struct{})
+	go func() {
+		for i := 1; i < 6; i++ {
+			fmt.Println(i)
+		}
+		chStr <- struct{}{}
+	}()
+	<-chStr
+	fmt.Println("все числа напечатаны")
 }

@@ -140,4 +140,22 @@ func Send3Mess() chan int {
 	return ch1
 }
 
-// NOTE:11
+// NOTE:12
+func CopyThroughChannel(nums []int) []int {
+	if len(nums) == 0 {
+		return []int{}
+	}
+	ch1 := make(chan int)
+	go func(nums []int) {
+		for _, v := range nums {
+			ch1 <- v
+		}
+	}(nums)
+	slice := make([]int, 0)
+	for i := 0; i < len(nums); i++ {
+		slice = append(slice, <-ch1)
+	}
+	return slice
+
+	// NOTE:13
+}
