@@ -110,4 +110,6 @@ func main() {
 	fmt.Println(SumHalves([]int{1, 1, 1}))
 	fmt.Println(SumHalves([]int{1, 1, 1, 1}))
 	fmt.Println(SumHalves(nil))
+	fmt.Println("----18------")
+	fmt.Println(Echo(3))
 }

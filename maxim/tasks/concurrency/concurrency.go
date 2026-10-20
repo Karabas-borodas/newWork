@@ -199,3 +199,12 @@ func SumHalves(nums []int) int {
 	}
 	return summ
 }
+
+// NOTE:18
+func Echo(x int) int {
+	ch1 := make(chan int)
+	go func(x int) {
+		ch1 <- x
+	}(x)
+	return <-ch1
+}
