@@ -112,4 +112,7 @@ func main() {
 	fmt.Println(SumHalves(nil))
 	fmt.Println("----18------")
 	fmt.Println(Echo(3))
+	fmt.Println("----20------")
+	fmt.Println(CountSteps([]int{1, 1, 1, 1}))
+	fmt.Println(CountSteps([]int{2, 3, 1, 1}))
 }

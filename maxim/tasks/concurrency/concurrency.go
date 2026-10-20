@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	// "sync"
+	"sync"
+	// "time"
 )
 
 // NOTE:1
@@ -207,4 +208,44 @@ func Echo(x int) int {
 		ch1 <- x
 	}(x)
 	return <-ch1
+}
+
+// NOTE:20
+func CountSteps(steps []int) int {
+	// counter := 0
+	// var mutex sync.Mutex
+	// ch1 := make(chan int)
+	// for i := 0; i < len(steps); i++ {
+	// 	go func(x int, m *sync.Mutex) {
+	// 		// mutex.Lock()
+	// 		// counter += x
+	// 		// mutex.Unlock()
+	// 		ch1 <- x
+	// 	}(steps[i], &mutex)
+	// }
+	// for i := 0; i < len(steps); i++ {
+	// 	counter += <-ch1
+	// }
+	// return counter
+
+	counter := 0
+	var mutex sync.Mutex
+	// ch1 := make(chan int)
+	var wg sync.WaitGroup
+	for i := 0; i < len(steps); i++ {
+		wg.Add(1)
+		go func(x int, m *sync.Mutex, counter *int, wg *sync.WaitGroup) {
+			mutex.Lock()
+			*counter += x
+			mutex.Unlock()
+
+			wg.Done()
+		}(steps[i], &mutex, &counter, &wg)
+	}
+	// for i := 0; i < len(steps); i++ {
+	// 	counter += <-ch1
+	// }
+	wg.Wait()
+	// time.Sleep(5 * time.Microsecond)
+	return counter
 }
