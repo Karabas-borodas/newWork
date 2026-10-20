@@ -156,6 +156,46 @@ func CopyThroughChannel(nums []int) []int {
 		slice = append(slice, <-ch1)
 	}
 	return slice
+}
 
-	// NOTE:13
+// NOTE:15
+func TwoResults(a, b int) []int {
+	ch := make(chan int)
+	go func(a int) {
+		ch <- a
+	}(a)
+
+	go func(b int) {
+		ch <- b
+	}(b)
+	slice := []int{}
+	for i := 0; i < 2; i++ {
+		slice = append(slice, <-ch)
+	}
+	return slice
+}
+
+// NOTE:17
+func SumHalves(nums []int) int {
+	length := len(nums) / 2
+	ch1 := make(chan int, 2)
+	go func(l int, nums []int) {
+		summ1 := 0
+		for i := 0; i < l; i++ {
+			summ1 += nums[i]
+		}
+		ch1 <- summ1
+	}(length, nums)
+	go func(l int, nums []int) {
+		summ1 := 0
+		for i := len(nums) - 1; i >= l; i-- {
+			summ1 += nums[i]
+		}
+		ch1 <- summ1
+	}(length, nums)
+	summ := 0
+	for i := 0; i < 2; i++ {
+		summ += <-ch1
+	}
+	return summ
 }

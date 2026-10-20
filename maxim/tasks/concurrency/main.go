@@ -85,14 +85,29 @@ func main() {
 	nums1 := []int{4, 4, -1}
 	fmt.Println(CopyThroughChannel(nums1))
 
-	fmt.Println("----13------")
+	fmt.Println("----14------")
 	chStr := make(chan struct{})
+	// go func() {
+	// 	for i := 1; i < 6; i++ {
+	// 		fmt.Println(i)
+	// 	}
+	// 	chStr <- struct{}{}
+	// }()
+	// <-chStr
 	go func() {
 		for i := 1; i < 6; i++ {
 			fmt.Println(i)
 		}
 		chStr <- struct{}{}
+
 	}()
 	<-chStr
 	fmt.Println("все числа напечатаны")
+	fmt.Println("----15------")
+	fmt.Println(TwoResults(1, 3))
+	fmt.Println("----17------")
+
+	fmt.Println(SumHalves([]int{1, 1, 1}))
+	fmt.Println(SumHalves([]int{1, 1, 1, 1}))
+	fmt.Println(SumHalves(nil))
 }
