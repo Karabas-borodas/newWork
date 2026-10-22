@@ -249,3 +249,32 @@ func CountSteps(steps []int) int {
 	// time.Sleep(5 * time.Microsecond)
 	return counter
 }
+
+// NOTE:24
+func BufferedSequence(n int) []int {
+	if n <= 0 || n > 100 {
+		return []int{}
+	}
+	ch1 := make(chan int, 2)
+	go func(n int) {
+		for i := 1; i < n+1; i++ {
+			ch1 <- i
+		}
+	}(n)
+	fmt.Println(cap(ch1))
+	slice := make([]int, n)
+	fmt.Println(len(ch1))
+	for i := 0; i < n; i++ {
+		slice[i] = <-ch1
+	}
+	return slice
+}
+
+// NOTE:26
+func StartSquare(n int) <-chan int {
+	ch1 := make(chan int, 1)
+	go func() {
+		ch1 <- n * n
+	}()
+	return ch1
+}

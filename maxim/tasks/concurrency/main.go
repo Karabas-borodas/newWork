@@ -115,4 +115,23 @@ func main() {
 	fmt.Println("----20------")
 	fmt.Println(CountSteps([]int{1, 1, 1, 1}))
 	fmt.Println(CountSteps([]int{2, 3, 1, 1}))
+	fmt.Println("----21------")
+	ch6 := make(chan int, 3)
+	ch6 <- 4
+	ch6 <- 5
+	ch6 <- 6
+	for i := 0; i < 3; i++ {
+
+		fmt.Println(<-ch6)
+	}
+	fmt.Println("----24------")
+	fmt.Println(BufferedSequence(5))
+	fmt.Println("----26------")
+	i := 0
+	for i < 20 {
+		v := StartSquare(4)
+		fmt.Println(<-v)
+		i++
+	}
+
 }
