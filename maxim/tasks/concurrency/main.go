@@ -133,5 +133,6 @@ func main() {
 		fmt.Println(<-v)
 		i++
 	}
-
+	fmt.Println("----28------")
+	fmt.Println(SumWithBuffer([]int{9, -9, 10, -8}))
 }

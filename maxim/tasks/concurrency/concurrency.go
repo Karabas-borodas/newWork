@@ -278,3 +278,22 @@ func StartSquare(n int) <-chan int {
 	}()
 	return ch1
 }
+
+// NOTE:28
+func SumWithBuffer(nums []int) int {
+	ch1 := make(chan int, 1)
+	if len(nums) == 0 {
+		return 0
+	}
+	go func(nums []int) {
+
+		for i := 0; i < len(nums); i++ {
+			ch1 <- nums[i]
+		}
+	}(nums)
+	count := 0
+	for i := 0; i < len(nums); i++ {
+		count += <-ch1
+	}
+	return count
+}
