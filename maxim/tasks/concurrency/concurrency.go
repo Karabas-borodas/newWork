@@ -280,6 +280,7 @@ func StartSquare(n int) <-chan int {
 }
 
 // NOTE:28
+
 func SumWithBuffer(nums []int) int {
 	ch1 := make(chan int, 1)
 	if len(nums) == 0 {
@@ -296,4 +297,42 @@ func SumWithBuffer(nums []int) int {
 		count += <-ch1
 	}
 	return count
+}
+
+// NOTE:30
+func BufferedPair(a, b string) map[string]int {
+	if a == "" || b == "" {
+		return nil
+	}
+	ch1 := make(chan string, 2)
+	go func(a string) {
+		ch1 <- a
+	}(a)
+	go func(a string) {
+		ch1 <- a
+	}(b)
+
+	ma := make(map[string]int)
+	for i := 0; i < 2; i++ {
+		ma[<-ch1]++
+	}
+
+	return ma
+
+}
+
+// NOTE:32
+func ReceiveN(in <-chan int, n int) []int {
+	result := make([]int, n)
+	for i := 0; i < n; i++ {
+		// result = append(result, <-in)
+		result[i] = <-in
+	}
+	return result
+}
+
+// NOTE:33
+func SendAndClose(value int, out chan<- int) {
+	out <- value
+	close(out)
 }

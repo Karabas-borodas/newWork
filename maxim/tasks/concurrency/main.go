@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	// "io"
 	"time"
 )
 
@@ -135,4 +136,32 @@ func main() {
 	}
 	fmt.Println("----28------")
 	fmt.Println(SumWithBuffer([]int{9, -9, 10, -8}))
+	fmt.Println("----30------")
+	fmt.Println(BufferedPair("123", "123"))
+	fmt.Println(BufferedPair("33", "123"))
+	fmt.Println(BufferedPair("", "123"))
+	fmt.Println("----32------")
+	go func() {
+		ch2 <- 1
+		ch2 <- 2
+		ch2 <- 3
+
+	}()
+	// for i := 15; i < 20; i++ {
+	// 	ch2 <- i
+	// }
+	fmt.Println(ReceiveN(ch2, 3))
+	fmt.Println("----33------")
+	chan1 := make(chan int)
+	// go func() {
+	// 	chan1 <- 1
+	// }()
+	go SendAndClose(1, chan1)
+	// close(chan1)
+	v1, ok1 := <-chan1
+	fmt.Println(v1, ok1) // Напечатает: 9 true
+
+	// Второе чтение
+	v2, ok2 := <-chan1
+	fmt.Println(v2, ok2) // Напечатает: 0 false
 }
