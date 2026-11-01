@@ -336,3 +336,5 @@ func SendAndClose(value int, out chan<- int) {
 	out <- value
 	close(out)
 }
+
+// NOTE:34

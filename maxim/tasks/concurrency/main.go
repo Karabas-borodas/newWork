@@ -153,9 +153,6 @@ func main() {
 	fmt.Println(ReceiveN(ch2, 3))
 	fmt.Println("----33------")
 	chan1 := make(chan int)
-	// go func() {
-	// 	chan1 <- 1
-	// }()
 	go SendAndClose(1, chan1)
 	// close(chan1)
 	v1, ok1 := <-chan1
@@ -164,4 +161,22 @@ func main() {
 	// Второе чтение
 	v2, ok2 := <-chan1
 	fmt.Println(v2, ok2) // Напечатает: 0 false
+	fmt.Println("----34------")
+	slice := []int{}
+	go func() {
+		ch2 <- 0
+		ch2 <- 5
+		ch2 <- 0
+		close(ch2)
+	}()
+	for {
+		v1, ok := <-ch2
+		if ok == false {
+			break
+		}
+		slice = append(slice, v1)
+	}
+
+	fmt.Println(slice)
+
 }
