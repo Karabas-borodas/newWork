@@ -337,4 +337,21 @@ func SendAndClose(value int, out chan<- int) {
 	close(out)
 }
 
-// NOTE:34
+// NOTE:35
+func CollectRange(in <-chan int) []int {
+	out := []int{}
+	for v := range in {
+		out = append(out, v)
+	}
+	return out
+}
+
+// NOTE:37
+func EmptyInts() <-chan int {
+	ch1 := make(chan int)
+	// go func() {
+	// ch1 <- 3
+	close(ch1)
+	// }()
+	return ch1
+}

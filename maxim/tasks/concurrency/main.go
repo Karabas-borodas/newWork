@@ -179,4 +179,18 @@ func main() {
 
 	fmt.Println(slice)
 
+	fmt.Println("----35------")
+	chan2 := make(chan int)
+	go func() {
+		// chan2 <- 1
+		// chan2 <- 1
+		close(chan2)
+	}()
+	fmt.Println(len(CollectRange(chan2)))
+	fmt.Println("----37------")
+	var count = 0
+	for range EmptyInts() {
+		count++
+	}
+	fmt.Println(count)
 }
