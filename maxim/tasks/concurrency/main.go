@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	// "io"
+	"sync"
 	"time"
 )
 
@@ -193,4 +194,31 @@ func main() {
 		count++
 	}
 	fmt.Println(count)
+	fmt.Println("----40------")
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func(wg *sync.WaitGroup) {
+		defer wg.Done()
+		fmt.Println("обработка завершена")
+	}(&wg)
+	wg.Wait()
+	fmt.Println("выход")
+
+	chh := make(chan struct{})
+	go func() {
+		fmt.Println("обработка завершена")
+		close(chh)
+	}()
+	<-chh
+	fmt.Println("выход")
+
+	fmt.Println("----41------")
+	ch2 = make(chan int)
+	go func() {
+		defer close(ch2)
+		ch2 <- 1
+		ch2 <- 2
+		ch2 <- 3
+	}()
+	fmt.Println(SumStream(ch2))
 }

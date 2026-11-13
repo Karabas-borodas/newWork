@@ -355,3 +355,25 @@ func EmptyInts() <-chan int {
 	// }()
 	return ch1
 }
+
+// NOTE:40
+
+func As() <-chan int {
+	fmt.Println("обработка завершена")
+	ch2 := make(chan int)
+	go func() {
+
+		ch2 <- 1
+		close(ch2)
+	}()
+	return ch2
+}
+
+// NOTE:41
+func SumStream(in <-chan int) int {
+	var n int = 0
+	for v := range in {
+		n += v
+	}
+	return n
+}
