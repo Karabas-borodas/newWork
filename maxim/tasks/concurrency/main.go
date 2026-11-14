@@ -221,4 +221,33 @@ func main() {
 		ch2 <- 3
 	}()
 	fmt.Println(SumStream(ch2))
+	fmt.Println("----43------")
+	ch1 = make(chan string)
+	go func() {
+		defer close(ch1)
+		ch1 <- "1"
+		ch1 <- "1"
+		ch1 <- "2"
+		ch1 <- "2"
+	}()
+	fmt.Println(WordCounts(ch1))
+
+	ch1 = make(chan string)
+	close(ch1)
+	fmt.Println(len(WordCounts(ch1)))
+	fmt.Println("----44------")
+
+	ch1 = make(chan string)
+	go func() {
+		defer close(ch1)
+		ch1 <- "1"
+		ch1 <- "1"
+		ch1 <- "2"
+		ch1 <- "2"
+	}()
+	fmt.Println(JoinStream(ch1, "-"))
+
+	ch1 = make(chan string)
+	close(ch1)
+	fmt.Println(JoinStream(ch1, "-"))
 }

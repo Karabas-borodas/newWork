@@ -369,11 +369,33 @@ func As() <-chan int {
 	return ch2
 }
 
-// NOTE:41
+// NOTE:41 -1
 func SumStream(in <-chan int) int {
 	var n int = 0
 	for v := range in {
 		n += v
 	}
 	return n
+}
+
+// NOTE:43 -2
+func WordCounts(in <-chan string) map[string]int {
+	ma := make(map[string]int)
+	for v := range in {
+		ma[v]++
+	}
+	return ma
+}
+
+// NOTE:44 -3
+func JoinStream(in <-chan string, sep string) string {
+	var str string = ""
+	for v := range in {
+		str += v
+		str += sep
+	}
+	if len(str) > 0 {
+		str = str[:len(str)-1]
+	}
+	return str
 }
