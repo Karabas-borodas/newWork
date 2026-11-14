@@ -250,4 +250,14 @@ func main() {
 	ch1 = make(chan string)
 	close(ch1)
 	fmt.Println(JoinStream(ch1, "-"))
+	fmt.Println("----46------")
+	ch1 = make(chan string)
+	go func() {
+		defer close(ch1)
+		ch1 <- "1f"
+		ch1 <- "1"
+		ch1 <- "2"
+		ch1 <- "2234234234"
+	}()
+	fmt.Println(LongestWord(ch1))
 }
