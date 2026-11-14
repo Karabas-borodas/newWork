@@ -403,16 +403,18 @@ func JoinStream(in <-chan string, sep string) string {
 // NOTE:46 -4
 func LongestWord(in <-chan string) (string, int) {
 	var length int
-	var word string
+	var word []rune
 	var index int
 	var indexstring int
 	for v := range in {
-		if length < len(v) {
-			length = len(v)
-			word = v
+		va := []rune(v)
+		if length < len(va) {
+			length = len(va)
+			word = va
 			indexstring = index
 		}
 		index++
 	}
-	return word, indexstring
+	exit := string(word)
+	return exit, indexstring
 }

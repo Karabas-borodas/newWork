@@ -254,10 +254,10 @@ func main() {
 	ch1 = make(chan string)
 	go func() {
 		defer close(ch1)
-		ch1 <- "1f"
 		ch1 <- "1"
-		ch1 <- "2"
-		ch1 <- "2234234234"
+		ch1 <- "1"
+		ch1 <- "aa"
+		ch1 <- "фы"
 	}()
 	fmt.Println(LongestWord(ch1))
 }
