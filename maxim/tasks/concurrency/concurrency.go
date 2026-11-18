@@ -417,4 +417,31 @@ func LongestWord(in <-chan string) (string, int) {
 	}
 	exit := string(word)
 	return exit, indexstring
+
+}
+
+// NOTE:47 -1.1
+type Run struct {
+	Value, Count int
+}
+
+func Runs(in <-chan int) []Run {
+	var r []Run
+	for v := range in {
+		if len(r) == 0 {
+			r = append(r, Run{Value: v, Count: 1})
+			continue
+		}
+
+		if v == r[len(r)-1].Value {
+			r[len(r)-1].Count += 1
+		} else {
+			var va Run
+			va.Value = v
+			va.Count = 1
+			r = append(r, va)
+		}
+	}
+
+	return r
 }

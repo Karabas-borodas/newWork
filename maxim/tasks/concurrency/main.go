@@ -260,4 +260,17 @@ func main() {
 		ch1 <- "фы"
 	}()
 	fmt.Println(LongestWord(ch1))
+
+	fmt.Println("----47------")
+	ch := make(chan int, 5)
+	go func() {
+		ch <- 1
+		ch <- 1
+		ch <- 2
+		ch <- 3
+		ch <- 3
+		close(ch)
+	}()
+
+	fmt.Println(Runs(ch)) // Выведет: [{1 2} {2 1} {3 2}]
 }
