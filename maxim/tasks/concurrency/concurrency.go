@@ -476,3 +476,18 @@ func TripleSums(in <-chan int) []int {
 	}
 	return out
 }
+
+// NOTE:51 -1.3
+
+type Entry struct {
+	Key   string
+	Value int
+}
+
+func LastValues(in <-chan Entry) map[string]int {
+	m := make(map[string]int)
+	for v := range in {
+		m[v.Key] = v.Value
+	}
+	return m
+}

@@ -286,4 +286,22 @@ func main() {
 		close(ch)
 	}()
 	fmt.Println(TripleSums(ch)) // Выведет: [{1 2} {2 1} {3 2}]
+
+	fmt.Println("-----51-----")
+	// type Entry struct {
+	// 	Key   string
+	// 	Value int
+	// }
+
+	chEntr := make(chan Entry, 5)
+
+	go func() {
+		defer close(chEntr)
+		chEntr <- Entry{"a", 1}
+		chEntr <- Entry{"b", 1}
+		chEntr <- Entry{"b", 2}
+		chEntr <- Entry{"c", 2}
+		chEntr <- Entry{"a", 3}
+	}()
+	fmt.Println(LastValues(chEntr)) // Выведет: [{1 2} {2 1} {3 2}]
 }
