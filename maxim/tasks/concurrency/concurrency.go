@@ -445,3 +445,34 @@ func Runs(in <-chan int) []Run {
 
 	return r
 }
+
+// NOTE:50 -1.2
+func TripleSums(in <-chan int) []int {
+	// var insert []int
+	// for v := range in {
+	// 	insert = append(insert, v)
+	// }
+	// var out []int
+	// var summ int
+	// for i := 0; i < len(insert)-2; i++ {
+	// 	for j := 0; j < 3; j++ {
+	// 		summ += insert[i+j]
+	// 	}
+	// 	out = append(out, summ)
+	// 	summ = 0
+	// }
+	// return out
+	//NOTE: нейронка
+
+	var insert [3]int
+	var out []int
+	count := 0
+	for v := range in {
+		insert[count%3] = v
+		count++
+		if count >= 3 {
+			out = append(out, insert[0]+insert[1]+insert[2])
+		}
+	}
+	return out
+}

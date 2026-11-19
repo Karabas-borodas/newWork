@@ -273,4 +273,17 @@ func main() {
 	}()
 
 	fmt.Println(Runs(ch)) // Выведет: [{1 2} {2 1} {3 2}]
+
+	fmt.Println("-----50-----")
+
+	ch = make(chan int, 5)
+	go func() {
+		ch <- 1
+		ch <- 1
+		ch <- 1
+		ch <- 3
+		ch <- 3
+		close(ch)
+	}()
+	fmt.Println(TripleSums(ch)) // Выведет: [{1 2} {2 1} {3 2}]
 }
