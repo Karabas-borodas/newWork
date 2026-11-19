@@ -491,3 +491,22 @@ func LastValues(in <-chan Entry) map[string]int {
 	}
 	return m
 }
+
+// NOTE:53 -1.4
+func Balanced(in <-chan rune) bool {
+	var ret bool = true
+	count := 0
+	for v := range in {
+		if v == rune('(') {
+			count++
+
+		}
+		if v == rune(')') {
+			count--
+		}
+	}
+	if count != 0 {
+		ret = false
+	}
+	return ret
+}

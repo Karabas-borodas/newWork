@@ -304,4 +304,15 @@ func main() {
 		chEntr <- Entry{"a", 3}
 	}()
 	fmt.Println(LastValues(chEntr)) // Выведет: [{1 2} {2 1} {3 2}]
+
+	fmt.Println("-----53-----")
+	chR := make(chan rune)
+	go func() {
+		defer close(chR)
+		chR <- '('
+		chR <- ')'
+		// chR <- '('
+		chR <- ')'
+	}()
+	fmt.Println(Balanced(chR)) // Выведет: [{1 2} {2 1} {3 2}]
 }
