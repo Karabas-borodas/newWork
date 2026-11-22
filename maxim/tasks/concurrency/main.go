@@ -315,4 +315,17 @@ func main() {
 		chR <- ')'
 	}()
 	fmt.Println(Balanced(chR)) // Выведет: [{1 2} {2 1} {3 2}]
+	fmt.Println("-----55-----")
+
+	ch11 := make(chan string)
+	go func() {
+		defer close(ch11)
+		ch11 <- "a"
+		ch11 <- "b"
+		ch11 <- "b"
+		ch11 <- "c"
+		ch11 <- "a"
+	}()
+	fmt.Println(FirstUnique(ch11)) // Выведет: [{1 2} {2 1} {3 2}]
+
 }

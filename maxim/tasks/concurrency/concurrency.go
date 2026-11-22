@@ -510,3 +510,19 @@ func Balanced(in <-chan rune) bool {
 	}
 	return ret
 }
+
+// NOTE:54 -1.5
+func FirstUnique(in <-chan string) (string, bool) {
+	var sl []string
+	var m = make(map[string]int)
+	for v := range in {
+		sl = append(sl, v)
+		m[v] += 1
+	}
+	for _, v := range sl {
+		if c := m[v]; c == 1 {
+			return v, true
+		}
+	}
+	return "", false
+}
