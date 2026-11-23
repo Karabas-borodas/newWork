@@ -526,3 +526,126 @@ func FirstUnique(in <-chan string) (string, bool) {
 	}
 	return "", false
 }
+
+// NOTE:56 -1.6
+func RowSums(rows [][]int) []int {
+	//NOTE:решенеи на мютекасах
+	// l := len(rows)
+	// var summ = make([]int, l)
+	// var wg sync.WaitGroup
+	// var mutex sync.Mutex
+	// wg.Add(len(rows))
+	// for i := 0; i < len(rows); i++ {
+	// 	go func(i int, summ []int, mutex *sync.Mutex) {
+	// 		defer wg.Done()
+	// 		//WARNING: знаю что раком ставлю всю скорость подсчета из за блокируиз операций
+	// 		mutex.Lock()
+	// 		for j := 0; j < len(rows[i]); j++ {
+	// 			summ[i] += rows[i][j]
+	// 		}
+	// 		mutex.Unlock()
+	//
+	// 	}(i, summ, &mutex)
+	// }
+	// wg.Wait()
+	// return summ
+	//NOTE: решение на каналах
+	l := len(rows)
+	// 1. Обязательно создаем срез нужной длины через make!
+	summ := make([]int, l)
+
+	result := make(chan struct {
+		index int
+		summ  int
+	}, l) // Буферизированный канал
+
+	for i := 0; i < l; i++ {
+		go func(i int) {
+			// 2. Локальная переменная для суммы строки (называем rowSum, чтобы не путать)
+			rowSum := 0
+
+			// 3. ВАЖНО: используем _, v для перебора ЗНАЧЕНИЙ, а не индексов!
+			for _, v := range rows[i] {
+				rowSum += v
+			}
+
+			// Отправляем результат в канал
+			result <- struct {
+				index int
+				summ  int
+			}{index: i, summ: rowSum}
+		}(i)
+	}
+
+	// 4. Собираем результаты
+	for i := 0; i < l; i++ {
+		res := <-result
+		// 5. Записываем по правильному индексу
+		summ[res.index] = res.summ
+	}
+
+	return summ
+}
+
+// NOTE:57 -1.7
+
+func OrderedSquares(nums []int) []int {
+	// //NOTE:мое решенеи
+	// type Str struct {
+	// 	index int
+	// 	value int
+	// }
+	// var wg sync.WaitGroup
+	// ret := make([]int, len(nums))
+	// chans := make(chan Str)
+	// wg.Add(len(nums))
+	// for i := 0; i < len(nums); i++ {
+	// 	go func(i int) {
+	// 		defer wg.done()
+	// 		chans <- str{index: i, value: nums[i] * nums[i]}
+	// 	}(i)
+	// }
+	// go func() {
+	// 	wg.Wait()
+	// 	close(chans)
+	// }()
+	// for v := range chans {
+	// 	ret[v.index] = v.value
+	// }
+	// return ret
+	//NOTE: через fan-out
+	type Str struct {
+		index int
+		value int
+	}
+	ret := make([]int, len(nums))
+
+	// 1. Канал для данных
+	chans := make(chan Str)
+
+	// 2. Канал для сигналов о завершении горутин
+	done := make(chan struct{}, len(nums))
+
+	for i := 0; i < len(nums); i++ {
+		go func(i int) {
+			// Отправляем результат
+			chans <- Str{index: i, value: nums[i] * nums[i]}
+			// Отправляем сигнал, что эта горутина закончила
+			done <- struct{}{}
+		}(i)
+	}
+
+	// 3. Запускаем фоновую горутину, которая ждет все сигналы и закрывает канал
+	go func() {
+		for i := 0; i < len(nums); i++ {
+			<-done // Ждем ровно len(nums) сигналов
+		}
+		close(chans) // Теперь безопасно закрыть
+	}()
+
+	// 4. Главный поток читает данные
+	for v := range chans {
+		ret[v.index] = v.value
+	}
+	return ret
+}
