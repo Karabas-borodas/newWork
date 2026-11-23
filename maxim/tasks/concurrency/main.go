@@ -353,4 +353,7 @@ func main() {
 	fmt.Println("-----57-----")
 
 	fmt.Println(OrderedSquares([]int{1, 2, 3, 4, 5})) // Выведет: [12 0 3]}
+
+	fmt.Println("-----59-----")
+	fmt.Println(FirstArrival([]string{"1", "2", "3", "4", "5"})) // Выведет: [12 0 3]}
 }

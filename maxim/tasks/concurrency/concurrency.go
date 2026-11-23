@@ -649,3 +649,22 @@ func OrderedSquares(nums []int) []int {
 	}
 	return ret
 }
+
+// NOTE:59 -1.8
+
+func FirstArrival(values []string) (string, bool) {
+	ch := make(chan string)
+	for _, v := range values {
+		go func(v string) {
+			ch <- v
+		}(v)
+	}
+
+	go func() {
+
+		for i := 0; i < len(values); i++ {
+			<-ch
+		}
+	}()
+	return <-ch, true
+}
