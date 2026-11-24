@@ -668,3 +668,55 @@ func FirstArrival(values []string) (string, bool) {
 	}()
 	return <-ch, true
 }
+
+// NOTE:60 -1.9
+func AllNonEmpty(values []string) bool {
+	// var ok = true
+	// ch := make(chan bool)
+	// ch2 := make(chan struct{})
+	// for i := 0; i < len(values); i++ {
+	// 	go func(val string) {
+	// 		if val == "" {
+	// 			ch <- false
+	// 		} else {
+	// 			ch <- true
+	// 		}
+	// 		ch2 <- struct{}{}
+	// 	}(values[i])
+	// }
+	// go func() {
+	//
+	// 	for i := 0; i < len(values); i++ {
+	// 		<-ch2
+	// 	}
+	// 	close(ch)
+	// }()
+	//
+	// for i := 0; i < len(values); i++ {
+	// 	c := <-ch
+	// 	if c == false {
+	// 		ok = false
+	// 	}
+	// }
+	// return ok
+	//NOTE: 1 канал
+	if len(values) == 0 {
+		return true
+	}
+
+	ch := make(chan bool)
+
+	for i := 0; i < len(values); i++ {
+		go func(val string) {
+			ch <- (val != "") // Отправляем true, если не пустая
+		}(values[i])
+	}
+
+	ok := true
+	for i := 0; i < len(values); i++ {
+		if !<-ch { // Если пришел false
+			ok = false
+		}
+	}
+	return ok
+}
