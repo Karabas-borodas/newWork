@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"unicode"
 	// "time"
 )
 
@@ -719,4 +720,37 @@ func AllNonEmpty(values []string) bool {
 		}
 	}
 	return ok
+}
+
+// NOTE:61 -1.10
+type Metric struct {
+	Name  string
+	Value int
+}
+
+func TextMetrics(s string) map[string]int {
+	ma := make(map[string]int)
+	ch := make(chan int)
+	countR := 0
+	countA := 0
+	go func(count int) {
+		r := []rune(s)
+		count = len(r)
+		ch <- count
+		fmt.Println("countr -- ", count)
+	}(countR)
+
+	go func(count int) {
+		for _, sp := range s {
+			if unicode.IsSpace(sp) {
+				count++
+			}
+		}
+		ch <- count
+	}(countA)
+	countA = <-ch
+	countR = <-ch
+	ma["runes"] = countR
+	ma["spaces"] = countA
+	return ma
 }
