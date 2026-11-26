@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 	"unicode"
 	// "time"
@@ -733,15 +734,16 @@ func TextMetrics(s string) map[string]int {
 	ch := make(chan int)
 	countR := 0
 	countA := 0
+	d := strings.TrimSpace(s)
 	go func(count int) {
-		r := []rune(s)
+		r := []rune(d)
 		count = len(r)
 		ch <- count
 		fmt.Println("countr -- ", count)
 	}(countR)
 
 	go func(count int) {
-		for _, sp := range s {
+		for _, sp := range d {
 			if unicode.IsSpace(sp) {
 				count++
 			}

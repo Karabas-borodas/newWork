@@ -364,5 +364,5 @@ func main() {
 	fmt.Println(AllNonEmpty([]string{"1", "2", "3", "4", "5"})) // Выведет: [12 0 3]}
 
 	fmt.Println("-----61-----")
-	fmt.Println(TextMetrics("п п п")) // Выведет: [12 0 3]}
+	fmt.Println(TextMetrics(" п п п")) // Выведет: [12 0 3]}
 }
