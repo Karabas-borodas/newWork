@@ -268,7 +268,7 @@ func GroupByParity(nums []int) map[string][]int {
 //		fmt.Println(AreAnagrams("ab", "Aa"))
 //	}
 //
-// NOTE: 24
+// NOTE: 24 1.1
 func f(i int) int {
 	i = i * 2
 	return i
@@ -279,4 +279,26 @@ func MapValues(m map[string]int, f func(int) int) map[string]int {
 		ma[v] = f(ma[v])
 	}
 	return ma
+}
+
+// NOTE: 27 1.2
+type Row struct {
+	ID    int
+	Name  string
+	Score int
+}
+
+func InnerJoin(left map[int]string, right map[int]int) []Row {
+	out := make([]Row, 0)
+
+	for v := range left {
+		if _, ok := right[v]; ok {
+			r := Row{}
+			r.ID = v
+			r.Name = left[v]
+			r.Score = right[v]
+			out = append(out, r)
+		}
+	}
+	return out
 }

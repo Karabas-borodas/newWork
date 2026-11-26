@@ -57,4 +57,14 @@ func main() {
 	empty := make(map[string]int)
 	fmt.Println(MapValues(mq, f))
 	fmt.Println(MapValues(empty, f))
+	fmt.Println("------27------")
+	mapsIntString := make(map[int]string)
+	mapsIntString[1] = "first"
+	mapsIntString[2] = "second"
+	mapsIntString[3] = "third"
+	mapsIntInt := make(map[int]int)
+	mapsIntInt[1] = 5
+	mapsIntInt[5] = 2
+	mapsIntInt[3] = 3
+	fmt.Println(InnerJoin(mapsIntString, mapsIntInt))
 }
