@@ -48,5 +48,13 @@ func main() {
 	// fmt.Println(WordFrequency("aa aa aa ad ad "))
 	// fmt.Println(WordFrequency("aaaa, aaaa& ll4Y aa, ad ad "))
 	// fmt.Println("#21")
+
 	// fmt.Println(GroupByParity([]int{1, 2, 3, 4, 5, 6, 8, 9, 6}))
+	fmt.Println("------24------")
+	mq := make(map[string]int)
+	mq["1"] = 1
+	mq["2"] = 2
+	empty := make(map[string]int)
+	fmt.Println(MapValues(mq, f))
+	fmt.Println(MapValues(empty, f))
 }
